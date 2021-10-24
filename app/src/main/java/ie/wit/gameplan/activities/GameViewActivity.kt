@@ -41,6 +41,11 @@ class GameViewActivity : AppCompatActivity() {
             editIntentLauncher.launch(launcherIntent)
         }
 
+        binding.deleteGame.setOnClickListener {
+
+            finish()
+        }
+
         registerEditCallback()
 
     }

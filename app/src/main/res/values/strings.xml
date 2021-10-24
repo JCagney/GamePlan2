@@ -8,6 +8,7 @@
     <string name="enter_game_title">Please Enter a Game Title</string>
     <string name="save_game">Save Game</string>
     <string name="edit_game">Edit Game</string>
+    <string name="delete_game">Delete Game</string>
     <string name="button_location">Set Location</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="list">List</string>
