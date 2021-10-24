@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.material.snackbar.Snackbar
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.ActivityGameBinding
 import ie.wit.gameplan.databinding.ActivityGameViewBinding
@@ -30,10 +32,13 @@ class GameViewActivity : AppCompatActivity() {
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
 
+        app = application as MainApp
+
         game = intent.extras?.getParcelable("game_view")!!
         Timber.i("Viewing game $game")
         binding.gameTitle.setText(game.title)
         binding.description.setText(game.description)
+        binding.date.setText(game.date.toString())
 
         binding.editGame.setOnClickListener {
             val launcherIntent = Intent(this, GameActivity::class.java)
@@ -43,7 +48,13 @@ class GameViewActivity : AppCompatActivity() {
 
         binding.deleteGame.setOnClickListener {
 
-            finish()
+
+            Snackbar.make(it, "Delete Game?", Snackbar.LENGTH_LONG)
+                .setAction("Delete"
+                ) {
+                    app.games.delete(game.id)
+                    finish()
+                }.show()
         }
 
         registerEditCallback()
@@ -72,10 +83,11 @@ class GameViewActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             Timber.i("Received edit")
-                            val game =
+                            game =
                                 result.data!!.extras?.getParcelable<GameModel>("game")!!
                             binding.gameTitle.setText(game.title)
                             binding.description.setText(game.description)
+                            binding.date.setText(game.date.toString())
 
                         }
                     }

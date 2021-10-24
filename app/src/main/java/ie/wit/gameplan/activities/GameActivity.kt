@@ -1,10 +1,12 @@
 package ie.wit.gameplan.activities
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.DatePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.github.ajalt.timberkt.Timber
@@ -16,6 +18,7 @@ import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
 import timber.log.Timber.i
+import java.time.LocalDate
 
 class GameActivity : AppCompatActivity() {
 
@@ -57,6 +60,11 @@ class GameActivity : AppCompatActivity() {
             } else {
                 if (edit) {
                     app.games.update(game.copy())
+                    val resultIntent = Intent()
+                    resultIntent.putExtra("game", game)
+                    setResult(Activity.RESULT_OK, resultIntent)
+                    finish()
+
                 } else {
                     app.games.create(game.copy())
                 }
@@ -69,6 +77,15 @@ class GameActivity : AppCompatActivity() {
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
+        }
+
+        val datePicker = findViewById<DatePicker>(R.id.datePicker)
+        datePicker.init(game.date.year, game.date.monthValue -1, game.date.dayOfMonth)
+        {
+                datePicker, year, month, day ->
+            game.date = LocalDate.of(year, month + 1, day)
+
+
         }
 
         registerMapCallback()
@@ -107,3 +124,5 @@ class GameActivity : AppCompatActivity() {
             }
     }
 }
+
+

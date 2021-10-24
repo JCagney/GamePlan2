@@ -30,8 +30,17 @@ class GameMemStore : GameStore {
             foundGame.lat = game.lat
             foundGame.lng = game.lng
             foundGame.zoom = game.zoom
+            foundGame.date = game.date
             logAll()
         }
+    }
+
+    override fun delete(id: Long)
+    {
+        var foundGame: GameModel? = games.find { g -> g.id == id }
+        games.remove(foundGame)
+        logAll()
+
     }
 
     fun logAll() {
