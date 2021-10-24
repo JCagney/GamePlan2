@@ -5,24 +5,30 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.material.snackbar.Snackbar
 import ie.wit.gameplan.R
-import ie.wit.gameplan.databinding.ActivityGameBinding
 import ie.wit.gameplan.databinding.ActivityGameViewBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
-import ie.wit.gameplan.models.Location
 import timber.log.Timber
 
-class GameViewActivity : AppCompatActivity() {
+class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var binding: ActivityGameViewBinding
     var game = GameModel()
     lateinit var app: MainApp
     private lateinit var editIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var map: GoogleMap
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +56,8 @@ class GameViewActivity : AppCompatActivity() {
 
 
             Snackbar.make(it, "Delete Game?", Snackbar.LENGTH_LONG)
-                .setAction("Delete"
+                .setAction(
+                    "Delete"
                 ) {
                     app.games.delete(game.id)
                     finish()
@@ -58,6 +65,10 @@ class GameViewActivity : AppCompatActivity() {
         }
 
         registerEditCallback()
+
+        val mapView = findViewById<MapView>(R.id.map_view)
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
 
     }
 
@@ -88,6 +99,13 @@ class GameViewActivity : AppCompatActivity() {
                             binding.gameTitle.setText(game.title)
                             binding.description.setText(game.description)
                             binding.date.setText(game.date.toString())
+                            map.clear()
+                            val loc = LatLng(game.lat, game.lng)
+                            map.addMarker(MarkerOptions().position(loc).title(game.title))
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
+
+
+
 
                         }
                     }
@@ -99,6 +117,16 @@ class GameViewActivity : AppCompatActivity() {
                     }
                 }
             }
+
+
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        val loc = LatLng(game.lat, game.lng)
+        map.addMarker(MarkerOptions().position(loc).title(game.title))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
+    }
 }
+
+

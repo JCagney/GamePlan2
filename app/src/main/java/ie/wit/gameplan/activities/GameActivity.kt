@@ -27,7 +27,7 @@ class GameActivity : AppCompatActivity() {
     lateinit  var app : MainApp
 
     var game = GameModel()
-    var location = Location(52.245696, -7.139102, 15f)
+    //var location = Location(52.245696, -7.139102, 15f)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,13 +67,20 @@ class GameActivity : AppCompatActivity() {
 
                 } else {
                     app.games.create(game.copy())
+                    setResult(RESULT_OK)
+                    finish()
                 }
             }
-            setResult(RESULT_OK)
-            finish()
+
         }
 
         binding.gameLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (game.zoom != 0f) {
+                location.lat =  game.lat
+                location.lng = game.lng
+                location.zoom = game.zoom
+            }
             val launcherIntent = Intent(this, MapActivity::class.java)
                 .putExtra("location", location)
             mapIntentLauncher.launch(launcherIntent)
@@ -115,8 +122,11 @@ class GameActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Location ${result.data.toString()}")
-                            location = result.data!!.extras?.getParcelable("location")!!
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
                             i("Location == $location")
+                            game.lat = location.lat
+                            game.lng = location.lng
+                            game.zoom = location.zoom
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
