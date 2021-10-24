@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">GamePlan</string>
+    <string name="button_addGame">Add Game</string>
+    <string name="hint_gameTitle">Game Title</string>
+    <string name="hint_gameDescription">Game Description</string>
+    <string name="menu_addGame">Add</string>
+    <string name="menu_cancelGame">Cancel</string>
+    <string name="enter_game_title">Please Enter a Game Title</string>
+    <string name="save_game">Save Game</string>
+    <string name="edit_game">Edit Game</string>
+    <string name="button_location">Set Location</string>
+    <string name="title_activity_map">MapActivity</string>
+    <string name="list">List</string>
 </resources>
