@@ -7,12 +7,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.material.snackbar.Snackbar
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.ActivityGameViewBinding
@@ -66,9 +63,13 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
         registerEditCallback()
 
-        val mapView = findViewById<MapView>(R.id.map_view)
-        mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
+        //val mapView = findViewById<MapView>(R.id.map_view)
+        //mapView.onCreate(savedInstanceState)
+        //mapView.getMapAsync(this)
+
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
     }
 
