@@ -34,7 +34,7 @@ class GameListActivity : AppCompatActivity(), GameListener {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = GameAdapter(app.games.findAll(), this)
+        loadGames()
 
         registerRefreshCallback()
 
@@ -66,7 +66,16 @@ class GameListActivity : AppCompatActivity(), GameListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { binding.recyclerView.adapter?.notifyDataSetChanged() }
+            { loadGames()}
+    }
+
+    private fun loadGames() {
+        showGames(app.games.findAll())
+    }
+
+    fun showGames (games: List<GameModel>) {
+        binding.recyclerView.adapter = GameAdapter(games, this)
+        binding.recyclerView.adapter?.notifyDataSetChanged()
     }
 
 }

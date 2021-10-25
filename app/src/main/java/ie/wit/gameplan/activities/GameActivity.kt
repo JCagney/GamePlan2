@@ -87,10 +87,11 @@ class GameActivity : AppCompatActivity() {
         }
 
         val datePicker = findViewById<DatePicker>(R.id.datePicker)
-        datePicker.init(game.date.year, game.date.monthValue -1, game.date.dayOfMonth)
+        val date = LocalDate.parse(game.date)
+        datePicker.init(date.year, date.monthValue -1, date.dayOfMonth)
         {
                 datePicker, year, month, day ->
-            game.date = LocalDate.of(year, month + 1, day)
+            game.date = LocalDate.of(year, month + 1, day).toString()
 
 
         }

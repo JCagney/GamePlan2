@@ -41,7 +41,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         Timber.i("Viewing game $game")
         binding.gameTitle.setText(game.title)
         binding.description.setText(game.description)
-        binding.date.setText(game.date.toString())
+        binding.date.setText(game.date)
 
         binding.editGame.setOnClickListener {
             val launcherIntent = Intent(this, GameActivity::class.java)
@@ -128,6 +128,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         map.addMarker(MarkerOptions().position(loc).title(game.title))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
     }
+
 }
 
 
