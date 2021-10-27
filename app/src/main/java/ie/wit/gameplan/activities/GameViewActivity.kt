@@ -41,7 +41,8 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         Timber.i("Viewing game $game")
         binding.gameTitle.setText(game.title)
         binding.description.setText(game.description)
-        binding.date.setText(game.date)
+        binding.date.setText("Game on ${game.date}")
+        binding.creater.setText("Created by ${game.creator}")
 
         binding.editGame.setOnClickListener {
             val launcherIntent = Intent(this, GameActivity::class.java)

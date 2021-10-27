@@ -10,6 +10,7 @@ class MainApp : Application() {
     lateinit var games: GameStore
     lateinit var users: UserStore
 
+
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())

@@ -15,7 +15,7 @@ import java.util.ArrayList
 
 const val USER_JSON_FILE = "users.json"
 
-val UserlistType: Type = object : TypeToken<ArrayList<UserModel>>() {}.type
+val UserListType: Type = object : TypeToken<ArrayList<UserModel>>() {}.type
 
 class UserJSONStore(private val context: Context) : UserStore{
 
@@ -47,13 +47,13 @@ class UserJSONStore(private val context: Context) : UserStore{
 
 
     private fun serialize() {
-        val jsonString = gsonBuilder.toJson(users, UserlistType)
+        val jsonString = gsonBuilder.toJson(users, UserListType)
         write(context, USER_JSON_FILE, jsonString)
     }
 
     private fun deserialize() {
         val jsonString = read(context, USER_JSON_FILE)
-        users = gsonBuilder.fromJson(jsonString,UserlistType)
+        users = gsonBuilder.fromJson(jsonString,UserListType)
     }
 
     private fun logAll() {

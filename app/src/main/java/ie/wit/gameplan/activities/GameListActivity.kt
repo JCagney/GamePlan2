@@ -14,11 +14,15 @@ import ie.wit.gameplan.adapters.GameListener
 import ie.wit.gameplan.databinding.ActivityGameListBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
+import ie.wit.gameplan.models.UserModel
+import timber.log.Timber
 
 class GameListActivity : AppCompatActivity(), GameListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivityGameListBinding
+
+    var user = UserModel()
 
     private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
 
@@ -26,6 +30,9 @@ class GameListActivity : AppCompatActivity(), GameListener {
         super.onCreate(savedInstanceState)
         binding = ActivityGameListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        user = intent.extras?.getParcelable("user")!!
+        Timber.i("Logged in: $user")
 
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
@@ -50,6 +57,7 @@ class GameListActivity : AppCompatActivity(), GameListener {
         when (item.itemId) {
             R.id.item_add -> {
                 val launcherIntent = Intent(this, GameActivity::class.java)
+                launcherIntent.putExtra("user", user)
                 refreshIntentLauncher.launch(launcherIntent)
             }
         }
@@ -59,6 +67,7 @@ class GameListActivity : AppCompatActivity(), GameListener {
     override fun onGameClick(game: GameModel) {
         val launcherIntent = Intent(this, GameViewActivity::class.java)
         launcherIntent.putExtra("game_view", game)
+        launcherIntent.putExtra("user", user)
         refreshIntentLauncher.launch(launcherIntent)
     }
 

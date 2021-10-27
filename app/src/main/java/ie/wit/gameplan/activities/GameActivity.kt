@@ -17,6 +17,7 @@ import ie.wit.gameplan.databinding.ActivityGameBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
+import ie.wit.gameplan.models.UserModel
 import timber.log.Timber.i
 import java.time.LocalDate
 
@@ -27,13 +28,17 @@ class GameActivity : AppCompatActivity() {
     lateinit  var app : MainApp
 
     var game = GameModel()
-    //var location = Location(52.245696, -7.139102, 15f)
+
+    var user = UserModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        user = intent.extras?.getParcelable("user")!!
 
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
@@ -66,6 +71,7 @@ class GameActivity : AppCompatActivity() {
                     finish()
 
                 } else {
+                    game.creator = "${user.firstName} ${user.lastName}"
                     app.games.create(game.copy())
                     setResult(RESULT_OK)
                     finish()

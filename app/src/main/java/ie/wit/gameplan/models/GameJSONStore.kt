@@ -13,7 +13,7 @@ const val JSON_FILE = "games.json"
 val gsonBuilder: Gson = GsonBuilder().setPrettyPrinting()
     .registerTypeAdapter(Uri::class.java, UriParser())
     .create()
-val GamelistType: Type = object : TypeToken<ArrayList<GameModel>>() {}.type
+val GameListType: Type = object : TypeToken<ArrayList<GameModel>>() {}.type
 
 fun generateRandomId(): Long {
     return Random().nextLong()
@@ -65,13 +65,13 @@ class GameJSONStore(private val context: Context) : GameStore {
 
 
     private fun serialize() {
-        val jsonString = gsonBuilder.toJson(games, GamelistType)
+        val jsonString = gsonBuilder.toJson(games, GameListType)
         write(context, JSON_FILE, jsonString)
     }
 
     private fun deserialize() {
         val jsonString = read(context, JSON_FILE)
-        games = gsonBuilder.fromJson(jsonString, GamelistType)
+        games = gsonBuilder.fromJson(jsonString, GameListType)
     }
 
     private fun logAll() {
