@@ -42,7 +42,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         Timber.i("Viewing game $game")
         binding.gameTitle.setText(game.title)
         binding.description.setText(game.description)
-        binding.date.setText("Game on ${game.date}")
+        binding.date.setText("Game Date: ${game.date}")
         binding.creater.setText("Created by ${game.creator}")
         Picasso.get().load(game.creatorPic).resize(200,200).into(binding.imageCreator)
 
@@ -102,7 +102,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
                                 result.data!!.extras?.getParcelable<GameModel>("game")!!
                             binding.gameTitle.setText(game.title)
                             binding.description.setText(game.description)
-                            binding.date.setText(game.date.toString())
+                            binding.date.setText(game.date)
                             //Picasso.get().load(game.creatorPic).resize(200,200).into(binding.imageCreator)
                             map.clear()
                             val loc = LatLng(game.lat, game.lng)

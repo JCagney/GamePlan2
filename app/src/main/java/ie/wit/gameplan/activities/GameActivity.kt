@@ -40,7 +40,7 @@ class GameActivity : AppCompatActivity() {
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        user = intent.extras?.getParcelable("user")!!
+
 
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
@@ -73,6 +73,7 @@ class GameActivity : AppCompatActivity() {
                     finish()
 
                 } else {
+                    user = intent.extras?.getParcelable("user")!!
                     game.creator = "${user.firstName} ${user.lastName}"
                     game.creatorPic = user.image
                     app.games.create(game.copy())

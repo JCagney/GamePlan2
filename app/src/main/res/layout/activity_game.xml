@@ -60,8 +60,8 @@
                     android:layout_margin="8dp"
                     android:hint="@string/hint_gameDescription"
                     android:inputType="text"
-                    android:maxLength="25"
-                    android:maxLines="1"
+                    android:maxLength="150"
+                    android:maxLines="3"
                     android:padding="8dp"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="14sp" />
