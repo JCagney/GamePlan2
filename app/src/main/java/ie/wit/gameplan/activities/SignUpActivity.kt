@@ -1,6 +1,7 @@
 package ie.wit.gameplan.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -8,12 +9,15 @@ import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.ActivityLoginBinding
 import ie.wit.gameplan.databinding.ActivitySignUpBinding
+import ie.wit.gameplan.helpers.showImagePicker
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.UserModel
 import timber.log.Timber
+import timber.log.Timber.i
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -23,10 +27,15 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var returnIntentLauncher: ActivityResultLauncher<Intent>
 
+    private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
+
+    var image: Uri = Uri.EMPTY
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         app = application as MainApp
+
 
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -34,17 +43,21 @@ class SignUpActivity : AppCompatActivity() {
         binding.signUp.title = title
         setSupportActionBar(binding.signUp)
 
+        binding.chooseImage.setOnClickListener {
+            showImagePicker(imageIntentLauncher)
+        }
+
         binding.btnLogin.setOnClickListener() {
-            var email = binding.email.text.toString()
+            var email = binding.email.text.toString().lowercase()
             Timber.i("Email: $email")
 
             var user: UserModel? = app.users.findAll().firstOrNull { it.email == email }
             if (user == null) {
                 var firstName = binding.firstName.text.toString()
                 var secondName = binding.secondName.text.toString()
-                var password = binding.password.text.toString()
+                var passwordHash = binding.password.text.toString().hashCode()
 
-                app.users.create(UserModel(email, firstName, secondName, password))
+                app.users.create(UserModel(email, firstName, secondName, passwordHash, image))
                 val launcherIntent = Intent(this, LoginActivity::class.java)
                 returnIntentLauncher.launch(launcherIntent)
             }
@@ -56,6 +69,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         registerReturnCallback()
+        registerImagePickerCallback()
 
 
     }
@@ -78,5 +92,24 @@ class SignUpActivity : AppCompatActivity() {
         returnIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
             { }
+    }
+
+    private fun registerImagePickerCallback() {
+        imageIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when(result.resultCode){
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Result ${result.data!!.data}")
+                            image = result.data!!.data!!
+                            Picasso.get()
+                                .load(image)
+                                .into(binding.profilePic)
+                        } // end of if
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
     }
 }

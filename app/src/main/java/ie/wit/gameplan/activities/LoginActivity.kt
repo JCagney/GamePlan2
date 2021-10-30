@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
 
         //create a temporary user
         if (app.users.findAll().firstOrNull { it.email == "john@gameplan.ie" } == null)
-            app.users.create(UserModel("john@gameplan.ie", "John", "Cagney", "password"))
+            app.users.create(UserModel("john@gameplan.ie", "John", "Cagney", "password".hashCode() ))
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,13 +42,14 @@ class LoginActivity : AppCompatActivity() {
         binding.signIn.title = title
         setSupportActionBar(binding.signIn)
 
+
         binding.btnLogin.setOnClickListener() {
-            var email = binding.email.text.toString()
+            var email = binding.email.text.toString().lowercase()
             i("Email: $email")
 
             var user: UserModel? = app.users.findAll().firstOrNull { it.email == email }
             if (user != null) {
-                if (binding.password.text.toString() == user.password)
+                if (binding.password.text.toString().hashCode() == user.passwordHash)
                 {
                     val launcherIntent = Intent(this, GameListActivity::class.java)
                     launcherIntent.putExtra("user", user)
@@ -82,6 +83,9 @@ class LoginActivity : AppCompatActivity() {
                 val launcherIntent = Intent(this, SignUpActivity::class.java)
                 signUpIntentLauncher.launch(launcherIntent)
             }
+
+
+
         }
         return super.onOptionsItemSelected(item)
     }
@@ -89,12 +93,12 @@ class LoginActivity : AppCompatActivity() {
     private fun registerGameCallback() {
         gameIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { }
+            {binding.password.setText("") }
     }
 
     private fun registerSignUpCallback() {
         signUpIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { }
+            {binding.password.setText("") }
     }
 }

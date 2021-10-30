@@ -21,11 +21,11 @@
             tools:text="A Title" />
 
         <TextView
-            android:id="@+id/description"
+            android:id="@+id/gameDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/gameTitle"
-            tools:text="A Description" />
+            tools:text="" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

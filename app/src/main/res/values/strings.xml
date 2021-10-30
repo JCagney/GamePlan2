@@ -25,4 +25,8 @@
     <string name="login_failed">"Login failed"</string>
     <string name="sign_up">"Sign Up"</string>
     <string name="email_taken">"This email is already in use"</string>
+    <string name="sign_out">Sign out</string>
+    <string name="button_addImage"> Add a Profile pic </string>
+    <string name="select_profile_image">Select a Profile pic </string>
+    <string name="creator">Game Creator</string>
 </resources>

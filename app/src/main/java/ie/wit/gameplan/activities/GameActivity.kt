@@ -20,6 +20,8 @@ import ie.wit.gameplan.models.Location
 import ie.wit.gameplan.models.UserModel
 import timber.log.Timber.i
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class GameActivity : AppCompatActivity() {
 
@@ -72,6 +74,7 @@ class GameActivity : AppCompatActivity() {
 
                 } else {
                     game.creator = "${user.firstName} ${user.lastName}"
+                    game.creatorPic = user.image
                     app.games.create(game.copy())
                     setResult(RESULT_OK)
                     finish()
@@ -93,11 +96,13 @@ class GameActivity : AppCompatActivity() {
         }
 
         val datePicker = findViewById<DatePicker>(R.id.datePicker)
-        val date = LocalDate.parse(game.date)
+        val date = LocalDate.parse(game.date, DateTimeFormatter.ofLocalizedDate(
+            FormatStyle.LONG))
         datePicker.init(date.year, date.monthValue -1, date.dayOfMonth)
         {
                 datePicker, year, month, day ->
-            game.date = LocalDate.of(year, month + 1, day).toString()
+            game.date = LocalDate.of(year, month + 1, day).format(DateTimeFormatter.ofLocalizedDate(
+                FormatStyle.LONG))
 
 
         }

@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/appBarLayout"
+            android:layout_marginTop="-3dp"
             android:fillViewport="true">
 
             <LinearLayout
@@ -53,6 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/gameTitle"
+                    android:textSize="16sp"
                     android:layout_margin="16dp"
                     tools:text="A Description" />
 
@@ -62,30 +64,50 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/description"
                     android:layout_margin="16dp"
+                    android:textSize="16sp"
                     tools:text="" />
 
-                <TextView
-                    android:id="@+id/creater"
-                    android:layout_width="wrap_content"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/date"
-                    android:layout_margin="16dp"
-                    tools:text="" />
+                    android:padding="16dp">
 
-                <!--<com.google.android.gms.maps.MapView
-                   android:id="@+id/map_view"
-                   android:layout_width="match_parent"
-                   android:layout_height="match_parent"
-                   android:layout_weight="2"
-                   />-->
+                    <ImageView
+                        android:id="@+id/imageCreator"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
 
-               <fragment
-                   android:id="@+id/map"
-                   class="com.google.android.gms.maps.SupportMapFragment"
-                   android:layout_width="match_parent"
-                   android:layout_height="200dp"/>
+                    <TextView
+                        android:id="@+id/creater"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAlignment="viewStart"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.048"
+                        app:layout_constraintStart_toEndOf="@+id/imageCreator"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="" />
 
-               <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <fragment
+                    android:id="@+id/map"
+                    class="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="16dp"/>
+
+                <!--<fragment xmlns:android="http://schemas.android.com/apk/res/android"
                    xmlns:map="http://schemas.android.com/apk/res-auto"
                    xmlns:tools="http://schemas.android.com/tools"
                    android:id="@+id/map"
@@ -102,12 +124,12 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:paddingBottom="8dp"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/edit_game"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <Button
                     android:id="@+id/deleteGame"
@@ -115,12 +137,12 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:background="@color/colorAccent"
-                    android:paddingBottom="8dp"
                     android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     android:stateListAnimator="@null"
                     android:text="@string/delete_game"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
             </LinearLayout>
         </ScrollView>

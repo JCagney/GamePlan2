@@ -60,6 +60,9 @@ class GameListActivity : AppCompatActivity(), GameListener {
                 launcherIntent.putExtra("user", user)
                 refreshIntentLauncher.launch(launcherIntent)
             }
+            R.id.item_logout -> {
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -85,6 +88,11 @@ class GameListActivity : AppCompatActivity(), GameListener {
     fun showGames (games: List<GameModel>) {
         binding.recyclerView.adapter = GameAdapter(games, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        binding.recyclerView.adapter?.notifyDataSetChanged()
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
 }

@@ -32,7 +32,7 @@ class GameAdapter constructor(private var games: List<GameModel>, private val li
 
         fun bind(game: GameModel, listener: GameListener) {
             binding.gameTitle.text = game.title
-            binding.description.text = game.description
+            binding.gameDate.text = game.date
             binding.root.setOnClickListener { listener.onGameClick(game) }
         }
     }

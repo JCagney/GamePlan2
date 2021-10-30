@@ -11,6 +11,7 @@ import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.snackbar.Snackbar
+import com.squareup.picasso.Picasso
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.ActivityGameViewBinding
 import ie.wit.gameplan.main.MainApp
@@ -43,6 +44,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.description.setText(game.description)
         binding.date.setText("Game on ${game.date}")
         binding.creater.setText("Created by ${game.creator}")
+        Picasso.get().load(game.creatorPic).resize(200,200).into(binding.imageCreator)
 
         binding.editGame.setOnClickListener {
             val launcherIntent = Intent(this, GameActivity::class.java)
@@ -101,6 +103,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
                             binding.gameTitle.setText(game.title)
                             binding.description.setText(game.description)
                             binding.date.setText(game.date.toString())
+                            //Picasso.get().load(game.creatorPic).resize(200,200).into(binding.imageCreator)
                             map.clear()
                             val loc = LatLng(game.lat, game.lng)
                             map.addMarker(MarkerOptions().position(loc).title(game.title))
