@@ -29,13 +29,13 @@ class SignUpActivity : AppCompatActivity() {
 
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
 
+    //create an empty uri for the optional profile pic
     var image: Uri = Uri.EMPTY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         app = application as MainApp
-
 
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -51,12 +51,14 @@ class SignUpActivity : AppCompatActivity() {
             var email = binding.email.text.toString().lowercase()
             Timber.i("Email: $email")
 
+            //check if the email is already registered
             var user: UserModel? = app.users.findAll().firstOrNull { it.email == email }
             if (user == null) {
                 var firstName = binding.firstName.text.toString()
                 var secondName = binding.secondName.text.toString()
+                //store a basic hash of the password
                 var passwordHash = binding.password.text.toString().hashCode()
-
+                //creeate the usser and return to the login activity
                 app.users.create(UserModel(email, firstName, secondName, passwordHash, image))
                 val launcherIntent = Intent(this, LoginActivity::class.java)
                 returnIntentLauncher.launch(launcherIntent)

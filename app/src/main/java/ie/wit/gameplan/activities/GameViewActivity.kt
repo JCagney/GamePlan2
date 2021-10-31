@@ -30,6 +30,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityGameViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -40,6 +41,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
         game = intent.extras?.getParcelable("game_view")!!
         Timber.i("Viewing game $game")
+
         binding.gameTitle.setText(game.title)
         binding.description.setText(game.description)
         binding.date.setText("Game Date: ${game.date}")
@@ -53,8 +55,6 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         binding.deleteGame.setOnClickListener {
-
-
             Snackbar.make(it, "Delete Game?", Snackbar.LENGTH_LONG)
                 .setAction(
                     "Delete"
@@ -66,10 +66,8 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
 
         registerEditCallback()
 
-        //val mapView = findViewById<MapView>(R.id.map_view)
-        //mapView.onCreate(savedInstanceState)
-        //mapView.getMapAsync(this)
 
+        //create the map fragment object and then call the getMapAsync method to trigger the onMapReady function call
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
@@ -108,13 +106,8 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
                             val loc = LatLng(game.lat, game.lng)
                             map.addMarker(MarkerOptions().position(loc).title(game.title))
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
-
-
-
-
                         }
                     }
-
 
                     RESULT_CANCELED -> {
                     }
@@ -122,8 +115,6 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             }
-
-
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -132,7 +123,6 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         map.addMarker(MarkerOptions().position(loc).title(game.title))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
     }
-
 }
 
 

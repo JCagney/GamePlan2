@@ -3,10 +3,13 @@ package ie.wit.gameplan.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import ie.wit.gameplan.R
 import ie.wit.gameplan.adapters.GameAdapter
@@ -24,7 +27,7 @@ class GameListActivity : AppCompatActivity(), GameListener {
 
     var user = UserModel()
 
-    private lateinit var refreshIntentLauncher : ActivityResultLauncher<Intent>
+    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +46,31 @@ class GameListActivity : AppCompatActivity(), GameListener {
         binding.recyclerView.layoutManager = layoutManager
         loadGames()
 
+        binding.filter.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            //filter for games where the title OR description contains the entered text
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null) {
+                    var filteredGames = app.games.findAll().filter { g ->
+                        g.title.lowercase().contains(
+                            p0.toString().lowercase()
+                        ) ||
+                                g.description.lowercase().contains(
+                                    p0.toString().lowercase()
+                                )
+                    }
+                    showGames(filteredGames)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        }
+        )
+
         registerRefreshCallback()
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,13 +78,16 @@ class GameListActivity : AppCompatActivity(), GameListener {
         return super.onCreateOptionsMenu(menu)
     }
 
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            //add a new game
             R.id.item_add -> {
                 val launcherIntent = Intent(this, GameActivity::class.java)
                 launcherIntent.putExtra("user", user)
                 refreshIntentLauncher.launch(launcherIntent)
             }
+            //logout option
             R.id.item_logout -> {
                 finish()
             }
@@ -78,14 +106,14 @@ class GameListActivity : AppCompatActivity(), GameListener {
     private fun registerRefreshCallback() {
         refreshIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
-            { loadGames()}
+            { loadGames() }
     }
 
     private fun loadGames() {
         showGames(app.games.findAll())
     }
 
-    fun showGames (games: List<GameModel>) {
+    fun showGames(games: List<GameModel>) {
         binding.recyclerView.adapter = GameAdapter(games, this)
         binding.recyclerView.adapter?.notifyDataSetChanged()
     }

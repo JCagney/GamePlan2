@@ -24,15 +24,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var gameIntentLauncher: ActivityResultLauncher<Intent>
     private lateinit var signUpIntentLauncher: ActivityResultLauncher<Intent>
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         app = application as MainApp
 
-
-        //create a temporary user
+        //create a user if it doesn't already exist (remove in prod))
         if (app.users.findAll().firstOrNull { it.email == "john@gameplan.ie" } == null)
             app.users.create(UserModel("john@gameplan.ie", "John", "Cagney", "password".hashCode() ))
 
@@ -47,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
             var email = binding.email.text.toString().lowercase()
             i("Email: $email")
 
+            //check if this user exists, if so check the password
             var user: UserModel? = app.users.findAll().firstOrNull { it.email == email }
             if (user != null) {
                 if (binding.password.text.toString().hashCode() == user.passwordHash)
@@ -83,9 +81,6 @@ class LoginActivity : AppCompatActivity() {
                 val launcherIntent = Intent(this, SignUpActivity::class.java)
                 signUpIntentLauncher.launch(launcherIntent)
             }
-
-
-
         }
         return super.onOptionsItemSelected(item)
     }
@@ -93,6 +88,7 @@ class LoginActivity : AppCompatActivity() {
     private fun registerGameCallback() {
         gameIntentLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            //clear the password on return
             {binding.password.setText("") }
     }
 

@@ -40,8 +40,6 @@ class GameActivity : AppCompatActivity() {
         binding = ActivityGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
 
@@ -55,7 +53,6 @@ class GameActivity : AppCompatActivity() {
             binding.gameTitle.setText(game.title)
             binding.description.setText(game.description)
             binding.btnAdd.setText(R.string.save_game)
-
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -73,6 +70,7 @@ class GameActivity : AppCompatActivity() {
                     finish()
 
                 } else {
+                    //for a new game, associate the current user as the creator of the game
                     user = intent.extras?.getParcelable("user")!!
                     game.creator = "${user.firstName} ${user.lastName}"
                     game.creatorPic = user.image
@@ -96,6 +94,7 @@ class GameActivity : AppCompatActivity() {
             mapIntentLauncher.launch(launcherIntent)
         }
 
+        // set the date of the game
         val datePicker = findViewById<DatePicker>(R.id.datePicker)
         val date = LocalDate.parse(game.date, DateTimeFormatter.ofLocalizedDate(
             FormatStyle.LONG))

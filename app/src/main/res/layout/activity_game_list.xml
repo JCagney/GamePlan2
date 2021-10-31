@@ -20,7 +20,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:titleTextColor="@color/colorPrimary" />
+
+        <EditText
+            android:id="@+id/filter"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_margin="8dp"
+            android:layout_below="@+id/toolbar"
+            android:hint="@string/search_games"
+            android:inputType="text"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
     </com.google.android.material.appbar.AppBarLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
