@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/gameListFragment">
+
+    <activity
+        android:id="@+id/gameViewActivity"
+        android:name="ie.wit.gameplan.activities.GameViewActivity"
+        android:label="activity_game_view"
+        tools:layout="@layout/activity_game_view" />
+    <activity
+        android:id="@+id/gameListActivity"
+        android:name="ie.wit.gameplan.activities.GameListActivity"
+        android:label="activity_game_list"
+        tools:layout="@layout/activity_game_list" />
+    <fragment
+        android:id="@+id/gameListFragment"
+        android:name="ie.wit.gameplan.GameListFragment"
+        android:label="fragment_game_list"
+        tools:layout="@layout/fragment_game_list" />
+</navigation>
