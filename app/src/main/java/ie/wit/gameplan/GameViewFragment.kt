@@ -1,55 +1,41 @@
 package ie.wit.gameplan
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.*
 import androidx.fragment.app.Fragment
-import androidx.activity.result.ActivityResultLauncher
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
-import androidx.recyclerview.widget.LinearLayoutManager
-import ie.wit.gameplan.activities.GameViewActivity
-import ie.wit.gameplan.adapters.GameAdapter
-import ie.wit.gameplan.adapters.GameListener
+import com.google.android.gms.maps.GoogleMap
+import com.squareup.picasso.Picasso
 import ie.wit.gameplan.databinding.FragmentGameListBinding
-
+import ie.wit.gameplan.databinding.FragmentGameViewBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
-import ie.wit.gameplan.models.UserModel
-import timber.log.Timber
+import android.content.Intent
+import android.view.*
+import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 
 
-class GameListFragment : Fragment(), GameListener {
+class GameViewFragment : Fragment() {
 
     lateinit var app: MainApp
-    private var _fragBinding: FragmentGameListBinding? = null
+    private var _fragBinding: FragmentGameViewBinding? = null
     private val fragBinding get() = _fragBinding!!
+    var game = GameModel()
 
-    var user = UserModel()
-
-    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
+    private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = activity?.application as MainApp
         setHasOptionsMenu(true)
-
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        _fragBinding = FragmentGameListBinding.inflate(inflater, container, false)
+        _fragBinding = FragmentGameViewBinding.inflate(inflater, container, false)
         val root = fragBinding.root
-
         activity?.title = getString(R.string.app_name)
-
-        fragBinding.recyclerView.setLayoutManager(LinearLayoutManager(activity))
-        fragBinding.recyclerView.adapter = GameAdapter(app.games.findAll(), this)
-
 
         return root;
     }
@@ -57,13 +43,13 @@ class GameListFragment : Fragment(), GameListener {
     companion object {
         @JvmStatic
         fun newInstance() =
-            GameListFragment().apply {
+            GameViewFragment().apply {
                 arguments = Bundle().apply {}
             }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_game_list, menu)
+        inflater.inflate(R.menu.menu_view_game, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -72,20 +58,12 @@ class GameListFragment : Fragment(), GameListener {
             requireView().findNavController()) || super.onOptionsItemSelected(item)
     }
 
-
-
-
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
     }
+
     override fun onResume() {
         super.onResume()
     }
-
-    override fun onGameClick(game: GameModel) {
-        TODO("Not yet implemented")
-    }
-
-
 }

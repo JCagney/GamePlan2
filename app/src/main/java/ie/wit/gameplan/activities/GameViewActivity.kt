@@ -80,11 +80,11 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.item_list -> {
-                finish()
-            }
-        }
+        //when (item.itemId) {
+         //   R.id.item_list -> {
+         //       finish()
+         //   }
+        //}
         return super.onOptionsItemSelected(item)
     }
 

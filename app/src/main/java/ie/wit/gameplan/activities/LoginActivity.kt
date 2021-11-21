@@ -49,7 +49,7 @@ class LoginActivity : AppCompatActivity() {
             if (user != null) {
                 if (binding.password.text.toString().hashCode() == user.passwordHash)
                 {
-                    val launcherIntent = Intent(this, GameListActivity::class.java)
+                    val launcherIntent = Intent(this, Home::class.java)
                     launcherIntent.putExtra("user", user)
                     gameIntentLauncher.launch(launcherIntent)
                 }

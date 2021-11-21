@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/item_list"
+        android:id="@+id/gameListFragment"
         android:title="@string/list"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
         app:showAsAction="always"/>

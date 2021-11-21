@@ -30,5 +30,13 @@
     <string name="select_profile_image">Select a Profile pic </string>
     <string name="creator">Game Creator</string>
     <string name="search_games">Search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="action_share">Share</string>
+    <string name="action_send">Send</string>
+    <string name="group_communicate">Communicate</string>
+    <string name="nav_header_title">GamePlan</string>
+    <string name="nav_header_subtitle">user@user</string>
+    <string name="nav_header_desc">Navigation header</string>
 
 </resources>

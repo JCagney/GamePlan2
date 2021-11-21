@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/gameListFragment"
+            android:icon="@drawable/ic_baseline_format_list_numbered_24"
+            android:title="@string/list" />
+    </group>
+
+    <item android:title="@string/group_communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:title="@string/action_share" />
+            <item
+                android:id="@+id/nav_send"
+                android:title="@string/action_send" />
+        </menu>
+    </item>
+</menu>

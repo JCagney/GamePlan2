@@ -27,12 +27,10 @@
         <activity
             android:name=".activities.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.Home"
+            android:exported="true" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -45,11 +43,6 @@
         <activity
             android:name=".activities.GameListActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".activities.GameActivity" />
         <activity android:name=".activities.GameViewActivity" />
