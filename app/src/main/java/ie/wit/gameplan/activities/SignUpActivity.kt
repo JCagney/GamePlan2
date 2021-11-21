@@ -58,7 +58,7 @@ class SignUpActivity : AppCompatActivity() {
                 var secondName = binding.secondName.text.toString()
                 //store a basic hash of the password
                 var passwordHash = binding.password.text.toString().hashCode()
-                //creeate the usser and return to the login activity
+                //creeate the user and return to the login activity
                 app.users.create(UserModel(email, firstName, secondName, passwordHash, image))
                 val launcherIntent = Intent(this, LoginActivity::class.java)
                 returnIntentLauncher.launch(launcherIntent)
