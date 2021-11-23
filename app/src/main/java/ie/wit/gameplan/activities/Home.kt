@@ -13,6 +13,7 @@ class Home : AppCompatActivity() {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var homeBinding : HomeBinding
+    private lateinit var appBarConfiguration: AppBarConfiguration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,9 @@ class Home : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.gameFragment, R.id.gameListFragment, R.id.gameViewFragment), drawerLayout)
+        setupActionBarWithNavController(navController, appBarConfiguration)
         val navView = homeBinding.navView
         navView.setupWithNavController(navController)
 
