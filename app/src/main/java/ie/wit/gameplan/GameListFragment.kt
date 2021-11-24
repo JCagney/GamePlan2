@@ -5,7 +5,10 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.result.ActivityResultLauncher
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 import ie.wit.gameplan.activities.GameViewActivity
@@ -24,6 +27,7 @@ class GameListFragment : Fragment(), GameListener {
     lateinit var app: MainApp
     private var _fragBinding: FragmentGameListBinding? = null
     private val fragBinding get() = _fragBinding!!
+    lateinit var navController: NavController
 
     var user = UserModel()
 
@@ -33,6 +37,7 @@ class GameListFragment : Fragment(), GameListener {
         super.onCreate(savedInstanceState)
         app = activity?.application as MainApp
         setHasOptionsMenu(true)
+
 
 
     }
@@ -49,6 +54,8 @@ class GameListFragment : Fragment(), GameListener {
 
         fragBinding.recyclerView.setLayoutManager(LinearLayoutManager(activity))
         fragBinding.recyclerView.adapter = GameAdapter(app.games.findAll(), this)
+
+        //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
 
         return root;
@@ -74,7 +81,6 @@ class GameListFragment : Fragment(), GameListener {
 
 
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _fragBinding = null
@@ -84,7 +90,7 @@ class GameListFragment : Fragment(), GameListener {
     }
 
     override fun onGameClick(game: GameModel) {
-        TODO("Not yet implemented")
+        findNavController().navigate(R.id.gameViewFragment)
     }
 
 

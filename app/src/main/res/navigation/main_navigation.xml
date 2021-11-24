@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/gameListFragment"
         android:name="ie.wit.gameplan.GameListFragment"
-        android:label="fragment_game_list"
         tools:layout="@layout/fragment_game_list" >
         <action
             android:id="@+id/action_gameListFragment_to_gameViewFragment"
@@ -36,11 +35,15 @@
             app:destination="@id/gameFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <argument
+            android:name="game"
+            app:argType="ie.wit.gameplan.models.GameModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
         android:name="ie.wit.gameplan.GameFragment"
-        android:label="fragment_game"
         tools:layout="@layout/fragment_game" >
         <action
             android:id="@+id/action_gameFragment_to_gameListFragment"

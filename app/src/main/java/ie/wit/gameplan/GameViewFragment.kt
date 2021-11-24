@@ -4,14 +4,15 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.squareup.picasso.Picasso
-import ie.wit.gameplan.databinding.FragmentGameListBinding
-import ie.wit.gameplan.databinding.FragmentGameViewBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import android.content.Intent
 import android.view.*
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
+import ie.wit.gameplan.activities.Home
+import ie.wit.gameplan.databinding.FragmentGameViewBinding
 
 
 class GameViewFragment : Fragment() {
@@ -21,12 +22,16 @@ class GameViewFragment : Fragment() {
     private val fragBinding get() = _fragBinding!!
     var game = GameModel()
 
+    lateinit var navController: NavController
+
     private lateinit var map: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         app = activity?.application as MainApp
         setHasOptionsMenu(true)
+
+
     }
 
     override fun onCreateView(
