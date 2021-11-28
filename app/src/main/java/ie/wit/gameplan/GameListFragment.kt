@@ -75,8 +75,16 @@ class GameListFragment : Fragment(), GameListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item,
-            requireView().findNavController()) || super.onOptionsItemSelected(item)
+        if (item.itemId == R.id.item_logout) {
+            activity?.finish()
+            return super.onOptionsItemSelected(item)
+        }
+        else {
+            return NavigationUI.onNavDestinationSelected(
+                item,
+                requireView().findNavController()
+            ) || super.onOptionsItemSelected(item)
+        }
     }
 
 
@@ -90,7 +98,8 @@ class GameListFragment : Fragment(), GameListener {
     }
 
     override fun onGameClick(game: GameModel) {
-        findNavController().navigate(R.id.gameViewFragment)
+        val action = GameListFragmentDirections.actionGameListFragmentToGameViewFragment(game)
+        findNavController().navigate(action)
     }
 
 

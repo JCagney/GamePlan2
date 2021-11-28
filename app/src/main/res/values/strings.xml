@@ -38,5 +38,6 @@
     <string name="nav_header_title">GamePlan</string>
     <string name="nav_header_subtitle">user@user</string>
     <string name="nav_header_desc">Navigation header</string>
+    <string name="button_setLocation">Set Location</string>
 
 </resources>

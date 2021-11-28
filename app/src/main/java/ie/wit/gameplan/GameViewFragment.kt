@@ -10,6 +10,7 @@ import android.content.Intent
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import ie.wit.gameplan.activities.Home
 import ie.wit.gameplan.databinding.FragmentGameViewBinding
@@ -21,6 +22,7 @@ class GameViewFragment : Fragment() {
     private var _fragBinding: FragmentGameViewBinding? = null
     private val fragBinding get() = _fragBinding!!
     var game = GameModel()
+    private val args by navArgs<GameViewFragmentArgs>()
 
     lateinit var navController: NavController
 
@@ -41,6 +43,13 @@ class GameViewFragment : Fragment() {
         _fragBinding = FragmentGameViewBinding.inflate(inflater, container, false)
         val root = fragBinding.root
         activity?.title = getString(R.string.app_name)
+
+        game = args.game!!
+
+        fragBinding.gameTitle.setText(game.title)
+        fragBinding.description.setText(game.description)
+        fragBinding.date.setText("Game Date: ${game.date}")
+        fragBinding.creater.setText("Created by ${game.creator}")
 
         return root;
     }
@@ -71,4 +80,11 @@ class GameViewFragment : Fragment() {
     override fun onResume() {
         super.onResume()
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+
+
 }

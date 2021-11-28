@@ -8,6 +8,10 @@
             android:id="@+id/gameListFragment"
             android:icon="@drawable/ic_baseline_format_list_numbered_24"
             android:title="@string/list" />
+        <item
+            android:id="@+id/gameFragment"
+            android:icon="@drawable/ic_baseline_format_list_numbered_24"
+            android:title="@string/button_addGame" />
     </group>
 
     <item android:title="@string/group_communicate">

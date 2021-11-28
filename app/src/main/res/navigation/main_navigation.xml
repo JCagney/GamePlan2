@@ -23,7 +23,6 @@
     <fragment
         android:id="@+id/gameViewFragment"
         android:name="ie.wit.gameplan.GameViewFragment"
-        android:label="fragment_game_view"
         tools:layout="@layout/fragment_game_view" >
         <action
             android:id="@+id/action_gameViewFragment_to_gameListFragment"
@@ -51,9 +50,21 @@
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
         <action
-            android:id="@+id/action_gameFragment_to_gameViewFragment"
-            app:destination="@id/gameViewFragment"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim" />
+            android:id="@+id/action_gameFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <argument
+            android:name="location"
+            app:argType="ie.wit.gameplan.models.Location" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="ie.wit.gameplan.MapFragment"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_gameFragment"
+            app:destination="@id/gameFragment" />
+        <argument
+            android:name="location"
+            app:argType="ie.wit.gameplan.models.Location" />
     </fragment>
 </navigation>
