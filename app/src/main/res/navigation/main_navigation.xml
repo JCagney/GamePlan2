@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/gameListFragment"
-        android:name="ie.wit.gameplan.GameListFragment"
+        android:name="ie.wit.gameplan.ui.list.GameListFragment"
         tools:layout="@layout/fragment_game_list" >
         <action
             android:id="@+id/action_gameListFragment_to_gameViewFragment"
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameViewFragment"
-        android:name="ie.wit.gameplan.GameViewFragment"
+        android:name="ie.wit.gameplan.ui.view.GameViewFragment"
         tools:layout="@layout/fragment_game_view" >
         <action
             android:id="@+id/action_gameViewFragment_to_gameListFragment"
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
-        android:name="ie.wit.gameplan.GameFragment"
+        android:name="ie.wit.gameplan.ui.game.GameFragment"
         tools:layout="@layout/fragment_game" >
         <action
             android:id="@+id/action_gameFragment_to_gameListFragment"
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/mapFragment"
-        android:name="ie.wit.gameplan.MapFragment"
+        android:name="ie.wit.gameplan.ui.game.MapFragment"
         tools:layout="@layout/fragment_map" >
         <action
             android:id="@+id/action_mapFragment_to_gameFragment"

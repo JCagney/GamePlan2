@@ -1,23 +1,17 @@
-package ie.wit.gameplan
+package ie.wit.gameplan.ui.game
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
-import ie.wit.gameplan.activities.MapActivity
+import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.FragmentGameBinding
-import ie.wit.gameplan.databinding.FragmentGameViewBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
@@ -56,7 +50,7 @@ class GameFragment : Fragment() {
             game.title = fragBinding.gameTitle.text.toString()
             game.description = fragBinding.description.text.toString()
             if (game.title.isEmpty()) {
-                Snackbar.make(it,R.string.enter_game_title, Snackbar.LENGTH_LONG)
+                Snackbar.make(it, R.string.enter_game_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
                 if (edit) {

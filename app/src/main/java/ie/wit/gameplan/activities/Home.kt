@@ -38,11 +38,11 @@ class Home : AppCompatActivity() {
         toolbar.title = getString(R.string.app_name)
 
         val navController = findNavController(R.id.nav_host_fragment)
-        //appBarConfiguration = AppBarConfiguration(setOf(
-        //    R.id.gameFragment, R.id.gameListFragment), drawerLayout)
-        //setupActionBarWithNavController(navController, appBarConfiguration)
+        appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.gameFragment, R.id.gameListFragment), drawerLayout)
+        setupActionBarWithNavController(navController, appBarConfiguration)
 
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
+        //NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
 
         val navView = homeBinding.navView
         navView.setupWithNavController(navController)
@@ -50,9 +50,14 @@ class Home : AppCompatActivity() {
 
 
     }
+    //override fun onSupportNavigateUp(): Boolean {
+    //    val navController = findNavController(R.id.nav_host_fragment)
+    //    return NavigationUI.navigateUp(navController, drawerLayout)
+    //}
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
-        return NavigationUI.navigateUp(navController, drawerLayout)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
 

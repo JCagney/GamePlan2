@@ -1,4 +1,4 @@
-package ie.wit.gameplan
+package ie.wit.gameplan.ui.game
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

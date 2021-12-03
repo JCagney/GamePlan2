@@ -1,18 +1,16 @@
-package ie.wit.gameplan
+package ie.wit.gameplan.ui.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
-import com.squareup.picasso.Picasso
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
-import android.content.Intent
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
-import ie.wit.gameplan.activities.Home
+import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.FragmentGameViewBinding
 
 

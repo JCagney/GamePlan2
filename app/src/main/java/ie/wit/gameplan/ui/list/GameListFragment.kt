@@ -1,4 +1,4 @@
-package ie.wit.gameplan
+package ie.wit.gameplan.ui.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,12 +6,11 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.result.ActivityResultLauncher
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
-import ie.wit.gameplan.activities.GameViewActivity
+import ie.wit.gameplan.R
 import ie.wit.gameplan.adapters.GameAdapter
 import ie.wit.gameplan.adapters.GameListener
 import ie.wit.gameplan.databinding.FragmentGameListBinding
@@ -19,7 +18,6 @@ import ie.wit.gameplan.databinding.FragmentGameListBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.UserModel
-import timber.log.Timber
 
 
 class GameListFragment : Fragment(), GameListener {
