@@ -52,9 +52,6 @@
         <action
             android:id="@+id/action_gameFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
-        <argument
-            android:name="location"
-            app:argType="ie.wit.gameplan.models.Location" />
     </fragment>
     <fragment
         android:id="@+id/mapFragment"

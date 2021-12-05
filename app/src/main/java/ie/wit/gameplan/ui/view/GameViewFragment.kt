@@ -10,11 +10,17 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.FragmentGameViewBinding
+import ie.wit.gameplan.models.Location
 
 
-class GameViewFragment : Fragment() {
+class GameViewFragment : Fragment(), OnMapReadyCallback {
 
     lateinit var app: MainApp
     private var _fragBinding: FragmentGameViewBinding? = null
@@ -22,9 +28,14 @@ class GameViewFragment : Fragment() {
     var game = GameModel()
     private val args by navArgs<GameViewFragmentArgs>()
 
+
+
+    private lateinit var mapView: MapView
+    private lateinit var map: GoogleMap
+
     lateinit var navController: NavController
 
-    private lateinit var map: GoogleMap
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +59,11 @@ class GameViewFragment : Fragment() {
         fragBinding.description.setText(game.description)
         fragBinding.date.setText("Game Date: ${game.date}")
         fragBinding.creater.setText("Created by ${game.creator}")
+
+        mapView = fragBinding.mapview
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+        mapView.getMapAsync(this)
 
         return root;
     }
@@ -81,6 +97,13 @@ class GameViewFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        map = googleMap
+        val loc = LatLng(game.lat, game.lng)
+        map.addMarker(MarkerOptions().position(loc).title(game.title))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
     }
 
 

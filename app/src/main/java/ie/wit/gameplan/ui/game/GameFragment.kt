@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -24,6 +25,8 @@ class GameFragment : Fragment() {
     private var _fragBinding: FragmentGameBinding? = null
     private val fragBinding get() = _fragBinding!!
     //lateinit var navController: NavController
+
+    private lateinit var gameViewModel: GameViewModel
 
     var game = GameModel()
     var user = UserModel()
@@ -46,6 +49,8 @@ class GameFragment : Fragment() {
         val root = fragBinding.root
         activity?.title = getString(R.string.app_name)
 
+        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+
         fragBinding.btnAdd.setOnClickListener() {
             game.title = fragBinding.gameTitle.text.toString()
             game.description = fragBinding.description.text.toString()
@@ -54,7 +59,7 @@ class GameFragment : Fragment() {
                     .show()
             } else {
                 if (edit) {
-                    app.games.update(game.copy())
+                    gameViewModel.updateGame(game.copy())
                     findNavController().navigate(R.id.gameListFragment)
 
 
@@ -63,7 +68,7 @@ class GameFragment : Fragment() {
                     user = activity?.intent?.extras?.getParcelable("user")!!
                     game.creator = "${user.firstName} ${user.lastName}"
                     game.creatorPic = user.image
-                    app.games.create(game.copy())
+                    gameViewModel.addGame(game.copy())
                     findNavController().navigate(R.id.gameListFragment)
                 }
             }
@@ -71,6 +76,11 @@ class GameFragment : Fragment() {
 
         fragBinding.gameLocation.setOnClickListener {
             val location = Location(52.245696, -7.139102, 15f)
+            if (game.zoom != 0f) {
+                location.lat = game.lat
+                location.lng = game.lng
+                location.zoom = game.zoom
+            }
             val action = GameFragmentDirections.actionGameFragmentToMapFragment(location)
             findNavController().navigate(action)
 
@@ -83,6 +93,16 @@ class GameFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //add an entry to SavedStateHandle to store location data while in Map Fragment
+        //https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Location>("key")?.observe(
+            viewLifecycleOwner) { result ->
+            game.lat = result.lat
+            game.lng = result.lng
+            game.zoom = result.zoom
+
+
+        }
 
     }
 

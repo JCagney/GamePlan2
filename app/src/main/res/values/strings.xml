@@ -39,5 +39,8 @@
     <string name="nav_header_subtitle">user@user</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="button_setLocation">Set Location</string>
+    <string name="gamesNotFound">No Games Yet...\nAdd a Game!</string>
+    <string name="gameError">Error : Couldn\'t Add Game..</string>
+
 
 </resources>

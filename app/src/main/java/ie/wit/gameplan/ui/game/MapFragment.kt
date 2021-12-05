@@ -36,6 +36,7 @@ GoogleMap.OnMarkerClickListener {
         super.onCreate(savedInstanceState)
         location = args.location
 
+
     }
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ GoogleMap.OnMarkerClickListener {
         fragBinding.btnSetLocation.setOnClickListener() {
             //val action = MapFragmentDirections.actionMapFragmentToGameFragment(location)
             //findNavController().navigate(action)
+
             findNavController().popBackStack()
         }
         mapView = fragBinding.mapview
@@ -82,6 +84,10 @@ GoogleMap.OnMarkerClickListener {
         location.lat = marker.position.latitude
         location.lng = marker.position.longitude
         location.zoom = map.cameraPosition.zoom
+
+        //set the savedStateHandle of the Game Fragment with the new location
+        //https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result
+        findNavController().previousBackStackEntry?.savedStateHandle?.set("key", location)
 
     }
 
