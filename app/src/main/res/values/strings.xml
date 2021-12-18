@@ -18,12 +18,12 @@
     <string name="prompt_first_name">First Name</string>
     <string name="prompt_second_name">Second Name</string>
     <string name="action_sign_in">Sign in or register</string>
-    <string name="sign_in">Sign in</string>
+    <string name="log_in">Log in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Incorrect Password</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="sign_up">"Sign Up"</string>
+    <string name="sign_up">Sign Up</string>
     <string name="email_taken">"This email is already in use"</string>
     <string name="sign_out">Sign out</string>
     <string name="button_addImage"> Add a Profile pic </string>
@@ -41,6 +41,7 @@
     <string name="button_setLocation">Set Location</string>
     <string name="gamesNotFound">No Games Yet...\nAdd a Game!</string>
     <string name="gameError">Error : Couldn\'t Add Game..</string>
+
 
 
 </resources>

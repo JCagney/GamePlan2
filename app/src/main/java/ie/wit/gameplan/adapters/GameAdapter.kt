@@ -31,9 +31,13 @@ class GameAdapter constructor(private var games: List<GameModel>, private val li
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(game: GameModel, listener: GameListener) {
-            binding.gameTitle.text = game.title
-            binding.gameDate.text = game.date
-            binding.root.setOnClickListener { listener.onGameClick(game) }
+            //binding.gameTitle.text = game.title
+            //binding.gameDate.text = game.date
+
+            binding.game = game
+
+            binding.root.setOnClickListener { listener.onGameClick(game)}
+            binding.executePendingBindings()
         }
     }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "480055766583",
+    "project_id": "gameplan2-16ce4",
+    "storage_bucket": "gameplan2-16ce4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:480055766583:android:4044ff33d955d2bd7e99b2",
+        "android_client_info": {
+          "package_name": "ie.wit.gameplan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "480055766583-ipi25nhit7aghreu94v95v3r4japkaak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8QoHKL7yna6OLAGU8-H-qCg-TZqPbn7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "480055766583-ipi25nhit7aghreu94v95v3r4japkaak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

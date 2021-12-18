@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.snackbar.Snackbar
 import ie.wit.gameplan.R
@@ -17,6 +20,8 @@ import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
 import ie.wit.gameplan.models.UserModel
+import ie.wit.gameplan.ui.auth.LoggedInViewModel
+import timber.log.Timber
 
 
 class GameFragment : Fragment() {
@@ -25,8 +30,11 @@ class GameFragment : Fragment() {
     private var _fragBinding: FragmentGameBinding? = null
     private val fragBinding get() = _fragBinding!!
     //lateinit var navController: NavController
+    private val args by navArgs<GameFragmentArgs>()
 
     private lateinit var gameViewModel: GameViewModel
+
+    private lateinit var loggedInViewModel : LoggedInViewModel
 
     var game = GameModel()
     var user = UserModel()
@@ -49,7 +57,18 @@ class GameFragment : Fragment() {
         val root = fragBinding.root
         activity?.title = getString(R.string.app_name)
 
+        var user = ""
+
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        gameViewModel.observableGame.observe(viewLifecycleOwner, Observer { render() })
+
+        loggedInViewModel = ViewModelProvider(this).get(LoggedInViewModel::class.java)
+        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
+            if (firebaseUser != null)
+                user = loggedInViewModel.liveFirebaseUser.value!!.email!!
+        })
+
+
 
         fragBinding.btnAdd.setOnClickListener() {
             game.title = fragBinding.gameTitle.text.toString()
@@ -65,14 +84,16 @@ class GameFragment : Fragment() {
 
                 } else {
                     //for a new game, associate the current user as the creator of the game
-                    user = activity?.intent?.extras?.getParcelable("user")!!
-                    game.creator = "${user.firstName} ${user.lastName}"
-                    game.creatorPic = user.image
+                    //user = activity?.intent?.extras?.getParcelable("user")!!
+                    game.creator = "${user}"
+                    //game.creatorPic = user.image
                     gameViewModel.addGame(game.copy())
                     findNavController().navigate(R.id.gameListFragment)
                 }
             }
         }
+
+
 
         fragBinding.gameLocation.setOnClickListener {
             val location = Location(52.245696, -7.139102, 15f)
@@ -91,6 +112,8 @@ class GameFragment : Fragment() {
 
         return root;
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         //add an entry to SavedStateHandle to store location data while in Map Fragment
@@ -117,5 +140,19 @@ class GameFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item,
             requireView().findNavController()) || super.onOptionsItemSelected(item)
+    }
+
+    private fun render() {
+
+        fragBinding.gamevm = gameViewModel
+        Timber.i("Retrofit fragBinding.donationvm == $fragBinding.donationvm")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (args.game != null)
+            gameViewModel.observableGame = args.game as LiveData<GameModel>
+
+
     }
 }

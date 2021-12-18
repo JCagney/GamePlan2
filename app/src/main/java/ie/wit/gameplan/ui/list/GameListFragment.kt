@@ -32,7 +32,7 @@ class GameListFragment : Fragment(), GameListener {
 
     private lateinit var gameListViewModel: GameListViewModel
 
-    var user = UserModel()
+    //var user = UserModel()
 
     private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
 
@@ -65,7 +65,7 @@ class GameListFragment : Fragment(), GameListener {
 
         val fab: FloatingActionButton = fragBinding.fab
         fab.setOnClickListener {
-            val action = GameListFragmentDirections.actionGameListFragmentToGameFragment()
+            val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(null)
             findNavController().navigate(action)
         }
 

@@ -1,5 +1,6 @@
 package ie.wit.gameplan.ui.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
@@ -8,6 +9,7 @@ import ie.wit.gameplan.models.GameModel
 import android.view.*
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -16,8 +18,10 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import ie.wit.gameplan.R
+import ie.wit.gameplan.activities.GameActivity
 import ie.wit.gameplan.databinding.FragmentGameViewBinding
 import ie.wit.gameplan.models.Location
+import ie.wit.gameplan.ui.list.GameListFragmentDirections
 
 
 class GameViewFragment : Fragment(), OnMapReadyCallback {
@@ -59,6 +63,11 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
         fragBinding.description.setText(game.description)
         fragBinding.date.setText("Game Date: ${game.date}")
         fragBinding.creater.setText("Created by ${game.creator}")
+
+        fragBinding.editGame.setOnClickListener {
+            val action = GameViewFragmentDirections.actionGameViewFragmentToGameFragment(game)
+            findNavController().navigate(action)
+        }
 
         mapView = fragBinding.mapview
         mapView.onCreate(savedInstanceState);

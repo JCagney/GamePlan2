@@ -11,11 +11,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
 import com.squareup.picasso.Picasso
 import ie.wit.gameplan.R
-import ie.wit.gameplan.databinding.ActivityLoginBinding
 import ie.wit.gameplan.databinding.ActivitySignUpBinding
 import ie.wit.gameplan.helpers.showImagePicker
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.UserModel
+import ie.wit.gameplan.ui.auth.Login
 import timber.log.Timber
 import timber.log.Timber.i
 
@@ -60,7 +60,7 @@ class SignUpActivity : AppCompatActivity() {
                 var passwordHash = binding.password.text.toString().hashCode()
                 //creeate the user and return to the login activity
                 app.users.create(UserModel(email, firstName, secondName, passwordHash, image))
-                val launcherIntent = Intent(this, LoginActivity::class.java)
+                val launcherIntent = Intent(this, Login::class.java)
                 returnIntentLauncher.launch(launcherIntent)
             }
             else
