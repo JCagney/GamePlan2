@@ -45,6 +45,29 @@ class GameViewModel : ViewModel() {
         }
     }
 
+    fun getGame(id: String) {
+        try {
+            //DonationManager.findById(email, id, donation)
+            FirebaseDBManager.findById(id, game)
+            Timber.i("Detail getDonation() Success : ${
+                game.value.toString()}")
+        }
+        catch (e: Exception) {
+            Timber.i("Detail getDonation() Error : $e.message")
+        }
+    }
+
+    fun delete(userid: String, id: String) {
+        try {
+            //DonationManager.delete(userid,id)
+            FirebaseDBManager.delete(userid,id)
+            Timber.i("Report Delete Success")
+        }
+        catch (e: Exception) {
+            Timber.i("Report Delete Error : $e.message")
+        }
+    }
+
     private var location = MutableLiveData<Location>()
 
     val observableGameList: LiveData<Location>

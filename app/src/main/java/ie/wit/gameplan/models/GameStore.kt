@@ -11,6 +11,8 @@ interface GameStore {
                 MutableLiveData<List<GameModel>>)
     fun findById(userid:String, gameid: String,
                  game: MutableLiveData<GameModel>)
+    fun findById(gameid: String,
+                 game: MutableLiveData<GameModel>)
     fun create(firebaseUser: MutableLiveData<FirebaseUser>, game: GameModel)
     fun delete(userid:String, gameid: String)
     fun update(userid:String, gameid: String, game: GameModel)

@@ -60,6 +60,17 @@ object FirebaseDBManager : GameStore {
         TODO("Not yet implemented")
     }
 
+    override fun findById(gameid: String, game: MutableLiveData<GameModel>) {
+
+        database.child("games")
+            .child(gameid).get().addOnSuccessListener {
+                game.value = it.getValue(GameModel::class.java)
+                Timber.i("firebase Got value ${it.value}")
+            }.addOnFailureListener{
+                Timber.e("firebase Error getting data $it")
+            }
+    }
+
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, game: GameModel) {
         Timber.i("Firebase DB Reference : $database")
 
@@ -80,7 +91,12 @@ object FirebaseDBManager : GameStore {
     }
 
     override fun delete(userid: String, gameid: String) {
-        TODO("Not yet implemented")
+
+        val childDelete : MutableMap<String, Any?> = HashMap()
+        childDelete["/games/$gameid"] = null
+        childDelete["/user-games/$userid/$gameid"] = null
+
+        database.updateChildren(childDelete)
     }
 
     override fun update(userid: String, gameid: String, game: GameModel) {

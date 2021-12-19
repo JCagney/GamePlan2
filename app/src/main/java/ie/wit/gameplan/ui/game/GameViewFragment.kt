@@ -1,12 +1,15 @@
-package ie.wit.gameplan.ui.view
+package ie.wit.gameplan.ui.game
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import android.view.*
+import android.widget.Toast
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -18,10 +21,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import ie.wit.gameplan.R
-import ie.wit.gameplan.activities.GameActivity
 import ie.wit.gameplan.databinding.FragmentGameViewBinding
-import ie.wit.gameplan.models.Location
-import ie.wit.gameplan.ui.list.GameListFragmentDirections
+import ie.wit.gameplan.ui.auth.LoggedInViewModel
+import timber.log.Timber
 
 
 class GameViewFragment : Fragment(), OnMapReadyCallback {
@@ -31,6 +33,10 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
     private val fragBinding get() = _fragBinding!!
     var game = GameModel()
     private val args by navArgs<GameViewFragmentArgs>()
+
+    private lateinit var gameViewModel: GameViewModel
+
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
 
 
@@ -57,16 +63,28 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
         val root = fragBinding.root
         activity?.title = getString(R.string.app_name)
 
-        game = args.game!!
+        //game = args.game!!
 
-        fragBinding.gameTitle.setText(game.title)
-        fragBinding.description.setText(game.description)
-        fragBinding.date.setText("Game Date: ${game.date}")
-        fragBinding.creater.setText("Created by ${game.creator}")
+        gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        gameViewModel.observableGame.observe(viewLifecycleOwner, Observer { render() })
+        gameViewModel.getGame(args.gameId!!)
+
+        //fragBinding.gameTitle.setText(game.title)
+        //fragBinding.description.setText(game.description)
+        //fragBinding.date.setText("Game Date: ${game.date}")
+        //fragBinding.creater.setText("Created by ${game.creator}")
 
         fragBinding.editGame.setOnClickListener {
             val action = GameViewFragmentDirections.actionGameViewFragmentToGameFragment(game)
             findNavController().navigate(action)
+        }
+
+        fragBinding.deleteGame.setOnClickListener {
+            if(loggedInViewModel.liveFirebaseUser.value!!.email == gameViewModel.observableGame.value!!.creator!!) {
+                gameViewModel.delete(loggedInViewModel.liveFirebaseUser.value!!.uid, gameViewModel.observableGame.value!!.uid!!)
+                val action = GameViewFragmentDirections.actionGameViewFragmentToGameListFragment()
+                findNavController().navigate(action)
+            }
         }
 
         mapView = fragBinding.mapview
@@ -100,9 +118,6 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
         _fragBinding = null
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
 
     override fun onDestroy() {
         super.onDestroy()
@@ -114,6 +129,31 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
         map.addMarker(MarkerOptions().position(loc).title(game.title))
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
     }
+
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+
+    private fun render() {
+
+        fragBinding.gamevm = gameViewModel
+
+        //only show edit & delete options if game belongs to logged in user
+        if(loggedInViewModel.liveFirebaseUser.value!!.email == gameViewModel.observableGame.value!!.creator!!)
+        {
+            fragBinding.deleteGame.visibility = View.VISIBLE
+            fragBinding.editGame.visibility = View.VISIBLE
+        }
+        else
+        {
+            fragBinding.deleteGame.visibility = View.GONE
+            fragBinding.editGame.visibility = View.GONE
+        }
+
+    }
+
 
 
 

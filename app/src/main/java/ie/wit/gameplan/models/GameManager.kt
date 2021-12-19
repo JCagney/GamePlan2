@@ -23,6 +23,10 @@ object GameManager : GameStore {
         TODO("Not yet implemented")
     }
 
+    override fun findById(gameid: String, game: MutableLiveData<GameModel>) {
+        TODO("Not yet implemented")
+    }
+
     override fun create(firebaseUser: MutableLiveData<FirebaseUser>, game: GameModel) {
         TODO("Not yet implemented")
     }

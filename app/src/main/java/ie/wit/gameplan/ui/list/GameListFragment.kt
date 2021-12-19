@@ -112,7 +112,7 @@ class GameListFragment : Fragment(), GameListener {
     }
 
     override fun onGameClick(game: GameModel) {
-        val action = GameListFragmentDirections.actionGameListFragmentToGameViewFragment(game)
+        val action = GameListFragmentDirections.actionGameListFragmentToGameViewFragment(game.uid)
         findNavController().navigate(action)
     }
 
