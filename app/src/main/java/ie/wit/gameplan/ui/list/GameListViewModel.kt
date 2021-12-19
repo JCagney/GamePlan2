@@ -3,6 +3,7 @@ package ie.wit.gameplan.ui.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ie.wit.gameplan.firebase.FirebaseDBManager
 import ie.wit.gameplan.models.GameManager
 import ie.wit.gameplan.models.GameModel
 
@@ -18,7 +19,7 @@ class GameListViewModel : ViewModel() {
     }
 
     fun load() {
-        gameList.value = GameManager.findAll()
+        FirebaseDBManager.findAll(gameList)
     }
 
 }

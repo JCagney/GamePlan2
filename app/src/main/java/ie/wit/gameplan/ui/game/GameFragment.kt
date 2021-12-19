@@ -78,7 +78,7 @@ class GameFragment : Fragment() {
                     .show()
             } else {
                 if (edit) {
-                    gameViewModel.updateGame(game.copy())
+                    gameViewModel.updateGame(loggedInViewModel.liveFirebaseUser.value!!.uid!!, game.uid!!, game.copy())
                     findNavController().navigate(R.id.gameListFragment)
 
 
@@ -87,7 +87,7 @@ class GameFragment : Fragment() {
                     //user = activity?.intent?.extras?.getParcelable("user")!!
                     game.creator = "${user}"
                     //game.creatorPic = user.image
-                    gameViewModel.addGame(game.copy())
+                    gameViewModel.addGame(loggedInViewModel.liveFirebaseUser, game.copy())
                     findNavController().navigate(R.id.gameListFragment)
                 }
             }

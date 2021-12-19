@@ -53,15 +53,7 @@ class GameListActivity : AppCompatActivity(), GameListener {
             //filter for games where the title OR description contains the entered text
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (p0 != null) {
-                    var filteredGames = app.games.findAll().filter { g ->
-                        g.title.lowercase().contains(
-                            p0.toString().lowercase()
-                        ) ||
-                                g.description.lowercase().contains(
-                                    p0.toString().lowercase()
-                                )
-                    }
-                    showGames(filteredGames)
+
                 }
             }
 
@@ -110,7 +102,7 @@ class GameListActivity : AppCompatActivity(), GameListener {
     }
 
     private fun loadGames() {
-        showGames(app.games.findAll())
+        //showGames(app.games.findAll())
     }
 
     fun showGames(games: List<GameModel>) {

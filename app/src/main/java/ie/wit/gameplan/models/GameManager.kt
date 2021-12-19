@@ -1,5 +1,7 @@
 package ie.wit.gameplan.models
 
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseUser
 import timber.log.Timber.i
 
 var lastId = 0L
@@ -9,41 +11,28 @@ internal fun getId(): Long {
 }
 
 object GameManager : GameStore {
-
-    val games = ArrayList<GameModel>()
-
-    override fun findAll(): List<GameModel> {
-        return games
+    override fun findAll(gameList: MutableLiveData<List<GameModel>>) {
+        TODO("Not yet implemented")
     }
 
-    override fun create(game: GameModel) {
-        game.id = getId()
-        games.add(game)
-        logAll()
+    override fun findAll(userid: String, gameList: MutableLiveData<List<GameModel>>) {
+        TODO("Not yet implemented")
     }
 
-    override fun update(game: GameModel) {
-        var foundGame: GameModel? = games.find { g -> g.id == game.id }
-        if (foundGame != null) {
-            foundGame.title = game.title
-            foundGame.description = game.description
-            foundGame.lat = game.lat
-            foundGame.lng = game.lng
-            foundGame.zoom = game.zoom
-            foundGame.date = game.date
-            logAll()
-        }
+    override fun findById(userid: String, gameid: String, game: MutableLiveData<GameModel>) {
+        TODO("Not yet implemented")
     }
 
-    override fun delete(id: Long)
-    {
-        var foundGame: GameModel? = games.find { g -> g.id == id }
-        games.remove(foundGame)
-        logAll()
-
+    override fun create(firebaseUser: MutableLiveData<FirebaseUser>, game: GameModel) {
+        TODO("Not yet implemented")
     }
 
-    fun logAll() {
-        games.forEach{ i("${it}") }
+    override fun delete(userid: String, gameid: String) {
+        TODO("Not yet implemented")
     }
+
+    override fun update(userid: String, gameid: String, game: GameModel) {
+        TODO("Not yet implemented")
+    }
+
 }

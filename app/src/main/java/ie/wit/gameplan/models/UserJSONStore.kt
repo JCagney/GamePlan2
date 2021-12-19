@@ -47,13 +47,13 @@ class UserJSONStore(private val context: Context) : UserStore{
 
 
     private fun serialize() {
-        val jsonString = gsonBuilder.toJson(users, UserListType)
-        write(context, USER_JSON_FILE, jsonString)
+        //val jsonString = gsonBuilder.toJson(users, UserListType)
+        //write(context, USER_JSON_FILE, jsonString)
     }
 
     private fun deserialize() {
-        val jsonString = read(context, USER_JSON_FILE)
-        users = gsonBuilder.fromJson(jsonString,UserListType)
+        //val jsonString = read(context, USER_JSON_FILE)
+        //users = gsonBuilder.fromJson(jsonString,UserListType)
     }
 
     private fun logAll() {

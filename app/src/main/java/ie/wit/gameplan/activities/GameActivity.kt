@@ -63,7 +63,9 @@ class GameActivity : AppCompatActivity() {
                     .show()
             } else {
                 if (edit) {
-                    app.games.update(game.copy())
+
+                    //app.games.update(game.copy())
+
                     val resultIntent = Intent()
                     resultIntent.putExtra("game", game)
                     setResult(Activity.RESULT_OK, resultIntent)
@@ -73,8 +75,8 @@ class GameActivity : AppCompatActivity() {
                     //for a new game, associate the current user as the creator of the game
                     user = intent.extras?.getParcelable("user")!!
                     game.creator = "${user.firstName} ${user.lastName}"
-                    game.creatorPic = user.image
-                    app.games.create(game.copy())
+                    //game.creatorPic = user.image
+                    //app.games.create(game.copy())
                     setResult(RESULT_OK)
                     finish()
                 }

@@ -3,6 +3,8 @@ package ie.wit.gameplan.ui.game
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseUser
+import ie.wit.gameplan.firebase.FirebaseDBManager
 import ie.wit.gameplan.models.GameManager
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
@@ -16,21 +18,27 @@ class GameViewModel : ViewModel() {
         get() = game
         set(value) {game.value = value.value}
 
+    private val status = MutableLiveData<Boolean>()
+
+    val observableStatus: LiveData<Boolean>
+        get() = status
 
 
 
-    fun addGame(game: GameModel) {
-        try {
-            GameManager.create(game)
-
+    fun addGame(firebaseUser: MutableLiveData<FirebaseUser>,
+                game: GameModel) {
+        status.value = try {
+            //DonationManager.create(donation)
+            FirebaseDBManager.create(firebaseUser,game)
+            true
         } catch (e: IllegalArgumentException) {
-
+            false
         }
     }
 
-    fun updateGame(game: GameModel) {
+    fun updateGame(userid:String, id: String, game: GameModel) {
         try {
-            GameManager.update(game)
+            FirebaseDBManager.update(userid, id, game)
 
         } catch (e: IllegalArgumentException) {
 

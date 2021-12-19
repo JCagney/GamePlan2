@@ -46,7 +46,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.description.setText(game.description)
         binding.date.setText("Game Date: ${game.date}")
         binding.creater.setText("Created by ${game.creator}")
-        Picasso.get().load(game.creatorPic).resize(200,200).into(binding.imageCreator)
+        //Picasso.get().load(game.creatorPic).resize(200,200).into(binding.imageCreator)
 
         binding.editGame.setOnClickListener {
             val launcherIntent = Intent(this, GameActivity::class.java)
@@ -59,7 +59,7 @@ class GameViewActivity : AppCompatActivity(), OnMapReadyCallback {
                 .setAction(
                     "Delete"
                 ) {
-                    app.games.delete(game.id)
+                    //app.games.delete(game.uid)
                     finish()
                 }.show()
         }
