@@ -4,12 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <data>
-        <variable
-            name="gamevm"
-            type="ie.wit.gameplan.ui.game.GameViewModel" />
-    </data>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +21,7 @@
                 android:layout_height="45dp"
                 android:layout_margin="8dp"
                 android:hint="@string/hint_gameTitle"
-                android:text="@={gamevm.observableGame.title}"
+
                 android:inputType="text"
                 android:maxLength="25"
                 android:maxLines="1"
@@ -41,7 +35,7 @@
                 android:layout_height="45dp"
                 android:layout_margin="8dp"
                 android:hint="@string/hint_gameDescription"
-                android:text="@={gamevm.observableGame.description}"
+
                 android:inputType="text"
                 android:maxLength="150"
                 android:maxLines="3"

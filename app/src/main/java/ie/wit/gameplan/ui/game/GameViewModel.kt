@@ -36,6 +36,13 @@ class GameViewModel : ViewModel() {
         }
     }
 
+    fun updateGame(game: GameModel)
+    {
+        observableGame = game as LiveData<GameModel>
+    }
+
+
+
     fun updateGame(userid:String, id: String, game: GameModel) {
         try {
             FirebaseDBManager.update(userid, id, game)

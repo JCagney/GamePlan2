@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -22,6 +23,9 @@ import ie.wit.gameplan.models.Location
 import ie.wit.gameplan.models.UserModel
 import ie.wit.gameplan.ui.auth.LoggedInViewModel
 import timber.log.Timber
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 
 class GameFragment : Fragment() {
@@ -59,8 +63,16 @@ class GameFragment : Fragment() {
 
         var user = ""
 
+        if (args.game != null) {
+            game = args.game!!
+            edit = true
+            fragBinding.gameTitle.setText(game.title)
+            fragBinding.description.setText(game.description)
+            fragBinding.btnAdd.setText(R.string.save_game)
+        }
+
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-        gameViewModel.observableGame.observe(viewLifecycleOwner, Observer { render() })
+        //gameViewModel.observableGame.observe(viewLifecycleOwner, Observer { render() })
 
         loggedInViewModel = ViewModelProvider(this).get(LoggedInViewModel::class.java)
         loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
@@ -109,6 +121,20 @@ class GameFragment : Fragment() {
 
         }
 
+        // set the date of the game
+        val datePicker = fragBinding.datePicker
+        val date = LocalDate.parse(game.date, DateTimeFormatter.ofLocalizedDate(
+            FormatStyle.LONG))
+        datePicker.init(date.year, date.monthValue -1, date.dayOfMonth)
+        {
+                datePicker, year, month, day ->
+                game.date = LocalDate.of(year, month + 1, day).format(
+                DateTimeFormatter.ofLocalizedDate(
+                FormatStyle.LONG))
+
+
+        }
+
 
         return root;
     }
@@ -120,12 +146,15 @@ class GameFragment : Fragment() {
         //https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Location>("key")?.observe(
             viewLifecycleOwner) { result ->
+
             game.lat = result.lat
             game.lng = result.lng
             game.zoom = result.zoom
 
 
         }
+
+        render()
 
     }
 
@@ -144,14 +173,14 @@ class GameFragment : Fragment() {
 
     private fun render() {
 
-        fragBinding.gamevm = gameViewModel
-        Timber.i("Retrofit fragBinding.donationvm == $fragBinding.donationvm")
+        //fragBinding.gamevm = gameViewModel
+
     }
 
     override fun onResume() {
         super.onResume()
-        if (args.game != null)
-            gameViewModel.observableGame = args.game as LiveData<GameModel>
+        //if (args.game != null)
+        //    gameViewModel.observableGame = args.game as LiveData<GameModel>
 
 
     }

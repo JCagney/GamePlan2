@@ -2,6 +2,7 @@ package ie.wit.gameplan.models
 
 import android.net.Uri
 import android.os.Parcelable
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.database.Exclude
 import com.google.firebase.database.IgnoreExtraProperties
 import kotlinx.parcelize.Parcelize
@@ -21,6 +22,7 @@ data class GameModel(var uid: String? = "",
                      var lng: Double = 0.0,
                      var zoom: Float = 0f,
                      var creator: String = "",
+                     //var location: String = LatLng(0.0,0.0).toString()
                      //var creatorPic: Uri = Uri.EMPTY
     ) : Parcelable
 {
@@ -35,6 +37,7 @@ data class GameModel(var uid: String? = "",
             "lng" to lng,
             "zoom" to zoom,
             "creator" to creator,
+            //"location" to location
             //"creatorPic" to creatorPic
         )
     }

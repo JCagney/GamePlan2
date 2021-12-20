@@ -75,7 +75,7 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
         //fragBinding.creater.setText("Created by ${game.creator}")
 
         fragBinding.editGame.setOnClickListener {
-            val action = GameViewFragmentDirections.actionGameViewFragmentToGameFragment(game)
+            val action = GameViewFragmentDirections.actionGameViewFragmentToGameFragment(gameViewModel.observableGame.value as GameModel)
             findNavController().navigate(action)
         }
 
@@ -125,9 +125,9 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        val loc = LatLng(game.lat, game.lng)
-        map.addMarker(MarkerOptions().position(loc).title(game.title))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, game.zoom))
+        val loc = LatLng(gameViewModel.observableGame.value!!.lat, gameViewModel.observableGame.value!!.lng)
+        map.addMarker(MarkerOptions().position(loc).title(gameViewModel.observableGame.value!!.title))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, gameViewModel.observableGame.value!!.zoom))
     }
 
     override fun onResume() {

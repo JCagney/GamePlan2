@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,6 +18,8 @@ import ie.wit.gameplan.models.Location
 import com.google.android.gms.maps.MapView
 
 import ie.wit.gameplan.databinding.FragmentMapBinding
+import ie.wit.gameplan.models.GameModel
+import ie.wit.gameplan.ui.auth.LoggedInViewModel
 
 
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener,
@@ -25,11 +28,14 @@ GoogleMap.OnMarkerClickListener {
     //some help from here: https://newbedev.com/getmapasync-in-fragment
 
     private lateinit var map: GoogleMap
+    //var game = GameModel()
     var location = Location()
     private lateinit var mapView: MapView
     private var _fragBinding: FragmentMapBinding? = null
     private val fragBinding get() = _fragBinding!!
     private val args by navArgs<MapFragmentArgs>()
+
+    //private val GameViewModel : GameViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
