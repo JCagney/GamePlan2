@@ -2,6 +2,8 @@ package ie.wit.gameplan.ui.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.result.ActivityResultLauncher
@@ -68,6 +70,30 @@ class GameListFragment : Fragment(), GameListener {
             val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(null)
             findNavController().navigate(action)
         }
+
+        fragBinding.filter.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            //filter for games where the title OR description contains the entered text
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0 != null) {
+                    var filteredGames = gameListViewModel.observableGameList.value!!.filter { g ->
+                        g.title.lowercase().contains(
+                            p0.toString().lowercase()
+                        ) ||
+                                g.description.lowercase().contains(
+                                    p0.toString().lowercase()
+                                )
+                    }
+                    render(filteredGames)
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+        }
+        )
 
         //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
