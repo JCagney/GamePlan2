@@ -89,16 +89,12 @@ class GameListFragment : Fragment(), GameListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.item_logout) {
-            activity?.finish()
-            return super.onOptionsItemSelected(item)
-        }
-        else {
+
             return NavigationUI.onNavDestinationSelected(
                 item,
                 requireView().findNavController()
             ) || super.onOptionsItemSelected(item)
-        }
+
     }
 
 

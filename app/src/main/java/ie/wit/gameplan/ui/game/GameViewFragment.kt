@@ -49,7 +49,7 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        app = activity?.application as MainApp
+        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
 
 
@@ -90,9 +90,14 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
         mapView = fragBinding.mapview
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
-        mapView.getMapAsync(this)
+        //mapView.getMapAsync(this)
 
         return root;
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        mapView.getMapAsync(this)
+        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {
@@ -132,7 +137,7 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
 
     override fun onResume() {
         super.onResume()
-
+        gameViewModel.getGame(args.gameId!!)
 
     }
 

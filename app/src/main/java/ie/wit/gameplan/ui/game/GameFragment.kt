@@ -1,11 +1,8 @@
 package ie.wit.gameplan.ui.game
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -41,13 +38,13 @@ class GameFragment : Fragment() {
     private lateinit var loggedInViewModel : LoggedInViewModel
 
     var game = GameModel()
-    var user = UserModel()
+    //var user = UserModel()
 
     var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        app = activity?.application as MainApp
+        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
         //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
@@ -81,7 +78,6 @@ class GameFragment : Fragment() {
         })
 
 
-
         fragBinding.btnAdd.setOnClickListener() {
             game.title = fragBinding.gameTitle.text.toString()
             game.description = fragBinding.description.text.toString()
@@ -93,19 +89,16 @@ class GameFragment : Fragment() {
                     gameViewModel.updateGame(loggedInViewModel.liveFirebaseUser.value!!.uid!!, game.uid!!, game.copy())
                     findNavController().navigate(R.id.gameListFragment)
 
-
                 } else {
                     //for a new game, associate the current user as the creator of the game
                     //user = activity?.intent?.extras?.getParcelable("user")!!
-                    game.creator = "${user}"
+                    game.creator = user
                     //game.creatorPic = user.image
                     gameViewModel.addGame(loggedInViewModel.liveFirebaseUser, game.copy())
                     findNavController().navigate(R.id.gameListFragment)
                 }
             }
         }
-
-
 
         fragBinding.gameLocation.setOnClickListener {
             val location = Location(52.245696, -7.139102, 15f)
@@ -116,8 +109,6 @@ class GameFragment : Fragment() {
             }
             val action = GameFragmentDirections.actionGameFragmentToMapFragment(location)
             findNavController().navigate(action)
-
-
 
         }
 
@@ -132,10 +123,7 @@ class GameFragment : Fragment() {
                 DateTimeFormatter.ofLocalizedDate(
                 FormatStyle.LONG))
 
-
         }
-
-
         return root;
     }
 
@@ -150,12 +138,12 @@ class GameFragment : Fragment() {
             game.lat = result.lat
             game.lng = result.lng
             game.zoom = result.zoom
-
-
         }
+    }
 
-        render()
-
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_game, menu)
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     companion object {
@@ -171,17 +159,6 @@ class GameFragment : Fragment() {
             requireView().findNavController()) || super.onOptionsItemSelected(item)
     }
 
-    private fun render() {
-
-        //fragBinding.gamevm = gameViewModel
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //if (args.game != null)
-        //    gameViewModel.observableGame = args.game as LiveData<GameModel>
 
 
-    }
 }

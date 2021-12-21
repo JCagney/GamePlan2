@@ -72,18 +72,8 @@ class GameListActivity : AppCompatActivity(), GameListener {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            //add a new game
-            //R.id.item_add -> {
-            //    val launcherIntent = Intent(this, GameActivity::class.java)
-            //    launcherIntent.putExtra("user", user)
-            //    refreshIntentLauncher.launch(launcherIntent)
-            //}
-            //logout option
-            R.id.item_logout -> {
-                finish()
-            }
-        }
+
+
         return super.onOptionsItemSelected(item)
     }
 
