@@ -96,6 +96,7 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        //update map
         mapView.getMapAsync(this)
         super.onViewCreated(view, savedInstanceState)
     }
