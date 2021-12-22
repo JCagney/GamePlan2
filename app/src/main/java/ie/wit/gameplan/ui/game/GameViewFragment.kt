@@ -131,9 +131,21 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
 
     override fun onMapReady(googleMap: GoogleMap) {
         map = googleMap
-        val loc = LatLng(gameViewModel.observableGame.value!!.lat, gameViewModel.observableGame.value!!.lng)
-        map.addMarker(MarkerOptions().position(loc).title(gameViewModel.observableGame.value!!.title))
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, gameViewModel.observableGame.value!!.zoom))
+        gameViewModel.observableGame.observe(viewLifecycleOwner, Observer { game ->
+            val loc = LatLng(
+                game.lat,
+                game.lng
+            )
+            map.addMarker(
+                MarkerOptions().position(loc).title(game.title)
+            )
+            map.moveCamera(
+                CameraUpdateFactory.newLatLngZoom(
+                    loc,
+                    game.zoom
+                )
+            )
+        })
     }
 
     override fun onResume() {

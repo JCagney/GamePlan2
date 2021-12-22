@@ -36,10 +36,6 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    fun updateGame(game: GameModel)
-    {
-        observableGame = game as LiveData<GameModel>
-    }
 
 
 

@@ -41,6 +41,7 @@
     <string name="button_setLocation">Set Location</string>
     <string name="gamesNotFound">No Games Yet...\nAdd a Game!</string>
     <string name="gameError">Error : Couldn\'t Add Game..</string>
+    <string name="messageLoading">Please Wait while the Games are Loading...</string>
 
 
 

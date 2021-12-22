@@ -1,6 +1,6 @@
 package ie.wit.gameplan.ui.list
 
-import android.content.Intent
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,24 +23,23 @@ import ie.wit.gameplan.databinding.FragmentGameListBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.UserModel
+import ie.wit.gameplan.utils.createLoader
+import ie.wit.gameplan.utils.hideLoader
+import ie.wit.gameplan.utils.showLoader
 
 
 class GameListFragment : Fragment(), GameListener {
 
-    lateinit var app: MainApp
+
     private var _fragBinding: FragmentGameListBinding? = null
     private val fragBinding get() = _fragBinding!!
-    lateinit var navController: NavController
 
     private lateinit var gameListViewModel: GameListViewModel
-
-    //var user = UserModel()
-
-    private lateinit var refreshIntentLauncher: ActivityResultLauncher<Intent>
+    lateinit var loader : AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        app = activity?.application as MainApp
+        //app = activity?.application as MainApp
         setHasOptionsMenu(true)
 
 
@@ -60,9 +59,16 @@ class GameListFragment : Fragment(), GameListener {
         fragBinding.recyclerView.setLayoutManager(LinearLayoutManager(activity))
         //fragBinding.recyclerView.adapter = GameAdapter(app.games.findAll(), this)
 
+        loader = createLoader(requireActivity())
+
         gameListViewModel = ViewModelProvider(this).get(GameListViewModel::class.java)
+        showLoader(loader,"Downloading Games")
         gameListViewModel.observableGameList.observe(viewLifecycleOwner, Observer { games ->
-            games?.let { render(games) }
+            games?.let {
+                render(games)
+                hideLoader(loader)
+                checkSwipeRefresh()
+            }
         })
 
         val fab: FloatingActionButton = fragBinding.fab
@@ -70,6 +76,8 @@ class GameListFragment : Fragment(), GameListener {
             val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(null)
             findNavController().navigate(action)
         }
+
+        setSwipeRefresh()
 
         fragBinding.filter.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -147,6 +155,21 @@ class GameListFragment : Fragment(), GameListener {
             fragBinding.recyclerView.visibility = View.VISIBLE
             fragBinding.gamesNotFound.visibility = View.GONE
         }
+    }
+
+    fun setSwipeRefresh() {
+        fragBinding.swiperefresh.setOnRefreshListener {
+            fragBinding.swiperefresh.isRefreshing = true
+            //showLoader(loader,"Downloading Games")
+            gameListViewModel.load()
+            checkSwipeRefresh()
+
+        }
+    }
+
+    fun checkSwipeRefresh() {
+        if (fragBinding.swiperefresh.isRefreshing)
+            fragBinding.swiperefresh.isRefreshing = false
     }
 
 
