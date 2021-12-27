@@ -7,6 +7,8 @@ import android.text.TextWatcher
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.activity.result.ActivityResultLauncher
+import androidx.appcompat.widget.SwitchCompat
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -22,6 +24,7 @@ import ie.wit.gameplan.databinding.FragmentGameListBinding
 
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
+import ie.wit.gameplan.ui.auth.LoggedInViewModel
 import ie.wit.gameplan.utils.createLoader
 import ie.wit.gameplan.utils.hideLoader
 import ie.wit.gameplan.utils.showLoader
@@ -35,6 +38,8 @@ class GameListFragment : Fragment(), GameListener {
 
     private lateinit var gameListViewModel: GameListViewModel
     lateinit var loader : AlertDialog
+
+    private val loggedInViewModel : LoggedInViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,6 +123,17 @@ class GameListFragment : Fragment(), GameListener {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
+
+        val item = menu.findItem(R.id.toggleGames) as MenuItem
+        item.setActionView(R.layout.togglebutton_layout)
+        val toggleGames: SwitchCompat = item.actionView.findViewById(R.id.toggleButton)
+        toggleGames.isChecked = false
+
+        toggleGames.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) gameListViewModel.loadAll()
+            else gameListViewModel.load()
+        }
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -137,6 +153,13 @@ class GameListFragment : Fragment(), GameListener {
         _fragBinding = null
     }
     override fun onResume() {
+
+        loggedInViewModel.liveFirebaseUser.observe(viewLifecycleOwner, Observer { firebaseUser ->
+            if (firebaseUser != null) {
+                gameListViewModel.liveFirebaseUser.value = firebaseUser
+                gameListViewModel.load()
+            }
+        })
         super.onResume()
     }
 
