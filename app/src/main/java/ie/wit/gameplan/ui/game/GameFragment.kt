@@ -17,7 +17,6 @@ import ie.wit.gameplan.databinding.FragmentGameBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
-import ie.wit.gameplan.models.UserModel
 import ie.wit.gameplan.ui.auth.LoggedInViewModel
 import timber.log.Timber
 import java.time.LocalDate

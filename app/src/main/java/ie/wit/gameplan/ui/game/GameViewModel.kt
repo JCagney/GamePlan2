@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import ie.wit.gameplan.firebase.FirebaseDBManager
-import ie.wit.gameplan.models.GameManager
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
 import timber.log.Timber

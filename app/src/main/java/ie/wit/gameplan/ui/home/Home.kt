@@ -1,4 +1,4 @@
-package ie.wit.gameplan.activities
+package ie.wit.gameplan.ui.home
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -11,14 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.*
 import androidx.navigation.ui.*
 import com.google.firebase.auth.FirebaseUser
+import com.squareup.picasso.Picasso
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.HomeBinding
 import ie.wit.gameplan.databinding.NavHeaderBinding
 import ie.wit.gameplan.models.GameModel
-import ie.wit.gameplan.models.UserModel
 import ie.wit.gameplan.ui.auth.LoggedInViewModel
 import ie.wit.gameplan.ui.auth.Login
-import timber.log.Timber
+import ie.wit.gameplan.utils.customTransformation
 
 class Home : AppCompatActivity() {
 
@@ -28,7 +28,6 @@ class Home : AppCompatActivity() {
     private lateinit var loggedInViewModel : LoggedInViewModel
     private lateinit var navHeaderBinding : NavHeaderBinding
 
-    //var user = UserModel()
     var game = GameModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,8 +37,6 @@ class Home : AppCompatActivity() {
         setContentView(homeBinding.root)
         drawerLayout = homeBinding.drawerLayout
 
-        //user = intent.extras?.getParcelable("user")!!
-        //Timber.i("Logged in: $user")
 
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -83,6 +80,18 @@ class Home : AppCompatActivity() {
         var headerView = homeBinding.navView.getHeaderView(0)
         navHeaderBinding = NavHeaderBinding.bind(headerView)
         navHeaderBinding.navHeaderEmail.text = currentUser.email
+
+        if(currentUser.photoUrl != null && currentUser.displayName != null)
+        {
+            navHeaderBinding.navHeaderName.text = currentUser.displayName
+
+            Picasso.get().load(currentUser.photoUrl)
+                .resize(200, 200)
+                .transform(customTransformation())
+                .centerCrop()
+                .into(navHeaderBinding.navHeaderImage)
+        }
+
     }
     //override fun onSupportNavigateUp(): Boolean {
     //    val navController = findNavController(R.id.nav_host_fragment)

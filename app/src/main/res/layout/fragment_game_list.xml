@@ -41,6 +41,7 @@
         android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
         android:layout_height="632dp"
+
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
@@ -74,9 +75,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:backgroundTint="@color/teal_700"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

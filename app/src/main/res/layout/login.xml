@@ -95,7 +95,30 @@
 
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/btnSignUp"
+                    android:layout_margin="16dp"
+                    android:orientation="horizontal"
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:textSize="16sp">
+
+                    <com.google.android.gms.common.SignInButton
+                        android:id="@+id/googleSignInButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+
+
+
             </LinearLayout>
+
+
+
         </ScrollView>
 
     </RelativeLayout>

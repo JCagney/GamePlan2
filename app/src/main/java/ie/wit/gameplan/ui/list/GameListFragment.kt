@@ -22,7 +22,6 @@ import ie.wit.gameplan.databinding.FragmentGameListBinding
 
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
-import ie.wit.gameplan.models.UserModel
 import ie.wit.gameplan.utils.createLoader
 import ie.wit.gameplan.utils.hideLoader
 import ie.wit.gameplan.utils.showLoader

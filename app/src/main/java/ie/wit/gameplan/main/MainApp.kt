@@ -7,8 +7,7 @@ import timber.log.Timber.i
 
 class MainApp : Application() {
 
-    lateinit var games: GameStore
-    lateinit var users: UserStore
+    //lateinit var games: GameStore
 
 
     override fun onCreate() {
