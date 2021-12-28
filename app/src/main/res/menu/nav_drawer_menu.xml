@@ -9,9 +9,9 @@
             android:icon="@drawable/ic_baseline_format_list_numbered_24"
             android:title="@string/list" />
         <item
-            android:id="@+id/gameFragment"
+            android:id="@+id/gameMapFragment"
             android:icon="@drawable/ic_baseline_format_list_numbered_24"
-            android:title="@string/button_addGame" />
+            android:title="@string/title_activity_map" />
     </group>
 
     <item android:title="@string/group_communicate">

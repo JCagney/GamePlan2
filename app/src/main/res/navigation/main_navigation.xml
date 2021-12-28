@@ -19,6 +19,9 @@
             app:destination="@id/gameFragment"
             app:enterAnim="@anim/nav_default_enter_anim"
             app:exitAnim="@anim/nav_default_exit_anim" />
+        <action
+            android:id="@+id/action_gameListFragment_to_gameMapFragment"
+            app:destination="@id/gameMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameViewFragment"
@@ -66,5 +69,14 @@
         <argument
             android:name="location"
             app:argType="ie.wit.gameplan.models.Location" />
+    </fragment>
+    <fragment
+        android:id="@+id/gameMapFragment"
+        android:name="ie.wit.gameplan.ui.list.GameMapFragment"
+        android:label="fragment_game_map"
+        tools:layout="@layout/fragment_game_map" >
+        <action
+            android:id="@+id/action_gameMapFragment_to_gameListFragment"
+            app:destination="@id/gameListFragment" />
     </fragment>
 </navigation>

@@ -35,10 +35,10 @@ class GameListViewModel : ViewModel() {
         try {
             readOnly.value = false
             FirebaseDBManager.findAll(liveFirebaseUser.value?.uid!!, gameList)
-            Timber.i("Report Load Success : ${gameList.value.toString()}")
+            Timber.i("Load Success : ${gameList.value.toString()}")
         }
         catch (e: Exception) {
-            Timber.i("Report Load Error : $e.message")
+            Timber.i("Load Error : $e.message")
         }
     }
 
@@ -46,10 +46,20 @@ class GameListViewModel : ViewModel() {
         try {
             readOnly.value = true
             FirebaseDBManager.findAll(gameList)
-            Timber.i("Report LoadAll Success : ${gameList.value.toString()}")
+            Timber.i("LoadAll Success : ${gameList.value.toString()}")
         }
         catch (e: Exception) {
-            Timber.i("Report LoadAll Error : $e.message")
+            Timber.i("LoadAll Error : $e.message")
+        }
+    }
+
+    fun delete(userid: String, id: String) {
+        try {
+            FirebaseDBManager.delete(userid,id)
+            Timber.i("Delete Success")
+        }
+        catch (e: Exception) {
+            Timber.i("Delete Error : $e.message")
         }
     }
 

@@ -15,7 +15,9 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ie.wit.gameplan.R
 import ie.wit.gameplan.adapters.GameAdapter
@@ -25,9 +27,7 @@ import ie.wit.gameplan.databinding.FragmentGameListBinding
 import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.ui.auth.LoggedInViewModel
-import ie.wit.gameplan.utils.createLoader
-import ie.wit.gameplan.utils.hideLoader
-import ie.wit.gameplan.utils.showLoader
+import ie.wit.gameplan.utils.*
 
 
 class GameListFragment : Fragment(), GameListener {
@@ -69,7 +69,7 @@ class GameListFragment : Fragment(), GameListener {
         showLoader(loader,"Downloading Games")
         gameListViewModel.observableGameList.observe(viewLifecycleOwner, Observer { games ->
             games?.let {
-                render(games)
+                render(games as ArrayList<GameModel>)
                 hideLoader(loader)
                 checkSwipeRefresh()
             }
@@ -98,7 +98,7 @@ class GameListFragment : Fragment(), GameListener {
                                     p0.toString().lowercase()
                                 )
                     }
-                    render(filteredGames)
+                    render(filteredGames as ArrayList<GameModel>)
                 }
             }
 
@@ -108,6 +108,28 @@ class GameListFragment : Fragment(), GameListener {
         )
 
         //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+
+        val swipeDeleteHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val adapter = fragBinding.recyclerView.adapter as GameAdapter
+                adapter.removeAt(viewHolder.adapterPosition)
+                gameListViewModel.delete(loggedInViewModel.liveFirebaseUser.value?.uid!!, (viewHolder.itemView.tag as GameModel).uid!!)
+
+
+            }
+        }
+
+        val itemTouchDeleteHelper = ItemTouchHelper(swipeDeleteHandler)
+        itemTouchDeleteHelper.attachToRecyclerView(fragBinding.recyclerView)
+
+        val swipeEditHandler = object : SwipeToEditCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val action = GameListFragmentDirections.actionGameListFragmentToGameFragment(viewHolder.itemView.tag as GameModel)
+                findNavController().navigate(action)
+            }
+        }
+        val itemTouchEditHelper = ItemTouchHelper(swipeEditHandler)
+        itemTouchEditHelper.attachToRecyclerView(fragBinding.recyclerView)
 
 
         return root;
@@ -168,8 +190,8 @@ class GameListFragment : Fragment(), GameListener {
         findNavController().navigate(action)
     }
 
-    private fun render(gameList: List<GameModel>) {
-        fragBinding.recyclerView.adapter = GameAdapter(gameList, this)
+    private fun render(gameList: ArrayList<GameModel>) {
+        fragBinding.recyclerView.adapter = GameAdapter(gameList, this, gameListViewModel.readOnly.value!!)
         if (gameList.isEmpty()) {
             fragBinding.recyclerView.visibility = View.GONE
             fragBinding.gamesNotFound.visibility = View.VISIBLE
