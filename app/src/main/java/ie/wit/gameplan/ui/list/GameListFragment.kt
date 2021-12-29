@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.widget.SwitchCompat
@@ -28,6 +29,10 @@ import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.ui.auth.LoggedInViewModel
 import ie.wit.gameplan.utils.*
+import android.view.Gravity
+
+
+
 
 
 class GameListFragment : Fragment(), GameListener {
@@ -66,11 +71,12 @@ class GameListFragment : Fragment(), GameListener {
         loader = createLoader(requireActivity())
 
         gameListViewModel = ViewModelProvider(this).get(GameListViewModel::class.java)
-        showLoader(loader,"Downloading Games")
+        //showLoader(loader,"Downloading Games")
+        fragBinding.swiperefresh.isRefreshing = true
         gameListViewModel.observableGameList.observe(viewLifecycleOwner, Observer { games ->
             games?.let {
                 render(games as ArrayList<GameModel>)
-                hideLoader(loader)
+                //hideLoader(loader)
                 checkSwipeRefresh()
             }
         })
@@ -152,8 +158,16 @@ class GameListFragment : Fragment(), GameListener {
         toggleGames.isChecked = false
 
         toggleGames.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) gameListViewModel.loadAll()
-            else gameListViewModel.load()
+            if (isChecked) {
+                gameListViewModel.loadAll()
+                Toast.makeText(activity, "Showing All Games", Toast.LENGTH_LONG).show()
+
+            }
+            else
+            {
+                gameListViewModel.load()
+                Toast.makeText(activity, "Showing Your Games", Toast.LENGTH_LONG).show()
+            }
         }
 
         super.onCreateOptionsMenu(menu, inflater)
@@ -205,7 +219,10 @@ class GameListFragment : Fragment(), GameListener {
         fragBinding.swiperefresh.setOnRefreshListener {
             fragBinding.swiperefresh.isRefreshing = true
             //showLoader(loader,"Downloading Games")
-            gameListViewModel.load()
+            if(gameListViewModel.readOnly.value == true)
+                gameListViewModel.loadAll()
+            else
+                gameListViewModel.load()
             checkSwipeRefresh()
 
         }

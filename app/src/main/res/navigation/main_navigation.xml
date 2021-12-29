@@ -73,7 +73,6 @@
     <fragment
         android:id="@+id/gameMapFragment"
         android:name="ie.wit.gameplan.ui.list.GameMapFragment"
-        android:label="fragment_game_map"
         tools:layout="@layout/fragment_game_map" >
         <action
             android:id="@+id/action_gameMapFragment_to_gameListFragment"
