@@ -13,8 +13,7 @@ class MainApp : Application() {
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-        //games = GameJSONStore(applicationContext)
-        //users = UserJSONStore(applicationContext)
+
         i("GamePlan started")
     }
 }

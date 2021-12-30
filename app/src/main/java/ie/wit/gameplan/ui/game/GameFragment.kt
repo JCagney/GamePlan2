@@ -44,7 +44,7 @@ class GameFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //app = activity?.application as MainApp
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
         //navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
 
     }
@@ -90,7 +90,6 @@ class GameFragment : Fragment() {
 
                 } else {
                     //for a new game, associate the current user as the creator of the game
-                    //user = activity?.intent?.extras?.getParcelable("user")!!
                     game.creator = user
                     //game.creatorPic = user.image
                     gameViewModel.addGame(loggedInViewModel.liveFirebaseUser, game.copy())
@@ -140,10 +139,10 @@ class GameFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_game, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    //override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    //    inflater.inflate(R.menu.menu_game, menu)
+    //    super.onCreateOptionsMenu(menu, inflater)
+    //}
 
     companion object {
         @JvmStatic

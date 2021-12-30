@@ -28,10 +28,10 @@ import timber.log.Timber
 
 class GameViewFragment : Fragment(), OnMapReadyCallback {
 
-    lateinit var app: MainApp
+    //lateinit var app: MainApp
     private var _fragBinding: FragmentGameViewBinding? = null
     private val fragBinding get() = _fragBinding!!
-    var game = GameModel()
+    //var game = GameModel()
     private val args by navArgs<GameViewFragmentArgs>()
 
     private lateinit var gameViewModel: GameViewModel
@@ -43,14 +43,14 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     private lateinit var map: GoogleMap
 
-    lateinit var navController: NavController
+    //lateinit var navController: NavController
 
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //app = activity?.application as MainApp
-        setHasOptionsMenu(true)
+        //setHasOptionsMenu(true)
 
 
     }
@@ -109,10 +109,10 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
             }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_view_game, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+    //override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    //    inflater.inflate(R.menu.menu_view_game, menu)
+    //    super.onCreateOptionsMenu(menu, inflater)
+    //}
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(item,

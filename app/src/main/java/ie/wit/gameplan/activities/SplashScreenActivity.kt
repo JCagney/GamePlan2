@@ -10,7 +10,7 @@ import ie.wit.gameplan.ui.auth.Login
 
 class SplashScreenActivity : AppCompatActivity() {
 
-    private val splashTimeOut:Long = 5000
+    private val splashTimeOut:Long = 4000
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -8,11 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.FragmentGameMapBinding
 import ie.wit.gameplan.databinding.FragmentMapBinding
@@ -47,12 +49,20 @@ class GameMapFragment : Fragment() {
         _fragBinding = FragmentGameMapBinding.inflate(inflater, container, false)
         val root = fragBinding.root
 
+        gameListViewModel.load()
+
         mapView = fragBinding.mapview
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
         mapView.getMapAsync{
             map = it
             configureMap()
+        }
+
+        val fab: FloatingActionButton = fragBinding.fab
+        fab.setOnClickListener {
+            val action = GameMapFragmentDirections.actionGameMapFragmentToGameFragment(null)
+            findNavController().navigate(action)
         }
 
 

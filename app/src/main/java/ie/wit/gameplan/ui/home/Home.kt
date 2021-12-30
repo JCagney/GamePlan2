@@ -28,7 +28,7 @@ class Home : AppCompatActivity() {
     private lateinit var loggedInViewModel : LoggedInViewModel
     private lateinit var navHeaderBinding : NavHeaderBinding
 
-    var game = GameModel()
+    //var game = GameModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
