@@ -1,5 +1,6 @@
 package ie.wit.gameplan.ui.game
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -11,6 +12,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.ui.NavigationUI
+
 import com.google.android.material.snackbar.Snackbar
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.FragmentGameBinding
@@ -18,7 +20,9 @@ import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
 import ie.wit.gameplan.ui.auth.LoggedInViewModel
+
 import timber.log.Timber
+import timber.log.Timber.i
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -37,7 +41,6 @@ class GameFragment : Fragment() {
     private lateinit var loggedInViewModel : LoggedInViewModel
 
     var game = GameModel()
-    //var user = UserModel()
 
     var edit = false
 
@@ -65,6 +68,7 @@ class GameFragment : Fragment() {
             fragBinding.gameTitle.setText(game.title)
             fragBinding.description.setText(game.description)
             fragBinding.btnAdd.setText(R.string.save_game)
+
         }
 
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
@@ -156,7 +160,6 @@ class GameFragment : Fragment() {
         return NavigationUI.onNavDestinationSelected(item,
             requireView().findNavController()) || super.onOptionsItemSelected(item)
     }
-
 
 
 }

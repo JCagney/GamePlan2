@@ -22,6 +22,7 @@ data class GameModel(var uid: String? = "",
                      var lng: Double = 0.0,
                      var zoom: Float = 0f,
                      var creator: String = "",
+                     var profilepic: String = "",
                      //var location: String = LatLng(0.0,0.0).toString()
                      //var creatorPic: Uri = Uri.EMPTY
     ) : Parcelable
@@ -37,7 +38,7 @@ data class GameModel(var uid: String? = "",
             "lng" to lng,
             "zoom" to zoom,
             "creator" to creator,
-            //"location" to location
+            "profilepic" to profilepic
             //"creatorPic" to creatorPic
         )
     }

@@ -19,11 +19,22 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
+        <ImageView
+            android:id="@+id/imageIcon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/app_name"
+            app:srcCompat="@mipmap/ic_launcher_round" />
+
         <TextView
             android:id="@+id/gameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/imageIcon"
             android:textSize="30sp"
             android:text="@{game.title}" />
 
@@ -32,7 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/gameTitle"
-            android:text="@{game.description}" />
+            android:layout_toEndOf="@+id/imageIcon"
+            android:text="@{game.date}" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

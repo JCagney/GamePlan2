@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseUser
 import ie.wit.gameplan.firebase.FirebaseDBManager
+import ie.wit.gameplan.firebase.FirebaseImageManager
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.models.Location
 import timber.log.Timber
@@ -27,6 +28,7 @@ class GameViewModel : ViewModel() {
     fun addGame(firebaseUser: MutableLiveData<FirebaseUser>,
                 game: GameModel) {
         status.value = try {
+            game.profilepic = FirebaseImageManager.imageUri.value.toString()
             FirebaseDBManager.create(firebaseUser,game)
             true
         } catch (e: IllegalArgumentException) {

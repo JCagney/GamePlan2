@@ -7,6 +7,7 @@ import ie.wit.gameplan.main.MainApp
 import ie.wit.gameplan.models.GameModel
 import android.view.*
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,9 +21,11 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.squareup.picasso.Picasso
 import ie.wit.gameplan.R
 import ie.wit.gameplan.databinding.FragmentGameViewBinding
 import ie.wit.gameplan.ui.auth.LoggedInViewModel
+import ie.wit.gameplan.utils.customTransformation
 import timber.log.Timber
 
 
@@ -66,7 +69,14 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
         //game = args.game!!
 
         gameViewModel = ViewModelProvider(this).get(GameViewModel::class.java)
-        gameViewModel.observableGame.observe(viewLifecycleOwner, Observer { render() })
+        gameViewModel.observableGame.observe(viewLifecycleOwner, Observer { game ->
+            Picasso.get().load(game.profilepic.toUri())
+                .resize(200, 200)
+                .transform(customTransformation())
+                .centerCrop()
+                .into(fragBinding.imageCreator)
+            render()
+        })
         gameViewModel.getGame(args.gameId!!)
 
         //fragBinding.gameTitle.setText(game.title)
@@ -157,6 +167,8 @@ class GameViewFragment : Fragment(), OnMapReadyCallback {
     private fun render() {
 
         fragBinding.gamevm = gameViewModel
+
+
 
         //only show edit & delete options if game belongs to logged in user
         if(loggedInViewModel.liveFirebaseUser.value!!.email == gameViewModel.observableGame.value!!.creator!!)

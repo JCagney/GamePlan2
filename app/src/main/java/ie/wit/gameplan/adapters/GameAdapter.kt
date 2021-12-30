@@ -2,10 +2,13 @@ package ie.wit.gameplan.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import ie.wit.gameplan.databinding.CardGameBinding
 import ie.wit.gameplan.models.GameModel
 import ie.wit.gameplan.ui.list.GameListViewModel
+import ie.wit.gameplan.utils.customTransformation
 
 interface GameListener {
     fun onGameClick(game: GameModel)
@@ -40,6 +43,12 @@ class GameAdapter constructor(private var games: ArrayList<GameModel>, private v
             binding.root.tag = game
 
             binding.game = game
+
+            Picasso.get().load(game.profilepic.toUri())
+                .resize(200, 200)
+                .transform(customTransformation())
+                .centerCrop()
+                .into(binding.imageIcon)
 
             binding.root.setOnClickListener { listener.onGameClick(game)}
             binding.executePendingBindings()
