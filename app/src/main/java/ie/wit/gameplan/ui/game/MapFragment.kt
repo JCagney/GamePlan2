@@ -25,7 +25,6 @@ import ie.wit.gameplan.ui.auth.LoggedInViewModel
 class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerDragListener,
 GoogleMap.OnMarkerClickListener {
 
-    //some help from here: https://newbedev.com/getmapasync-in-fragment
 
     private lateinit var map: GoogleMap
     //var game = GameModel()

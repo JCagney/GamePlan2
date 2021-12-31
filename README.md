@@ -13,9 +13,9 @@ Once built, the .apk file can be installed on any device running Android 11 or h
 User can create an account with a username / password or sign in with their Google account. In both instances an account is created in Firebase which the user can authenticate against on future logins. 
 If exists, the user's Google profile pic is stored as their profile pic and displayed in the Nav drawer header, else a default image is used. The user can update their profile pic by clicking on on it and choosing an image from local storage. This updates their profile pic in Firebase storage. 
 
-Once logged in, the user lands on a list (recycler view) of current games which is loaded from the Firebase DB Each item has the game title, date a profile pic of the creator. The user can toggle between viewing their own games or all the games in the DB. 
+Once logged in, the user lands on a list (recycler view) of current games which is loaded from the Firebase DB Each item has the game title, date a profile pic of the creator. The user can toggle between viewing their own games or all the games in the DB. The user can also filter games by entering text which searches the name and description of the games. 
 
-Their is a floating action button which the user can click to Add a Game. Here they add a name, description, date and location. The Add location button open a new fragment with a map. Once the location is set by dragging the marker, it is returned to the Add Game fragment by adding a key/value pair to the [savedStateHandle](https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result) of the Add Game fragment on the back stack. This can then be accessed in the Add Game fragment.
+There is a floating action button which the user can click to Add a Game. Here they add a name, description, date and location. The Add location button open a new fragment with a map. Once the location is set by dragging the marker, it is returned to the Add Game fragment by adding a key/value pair to the [savedStateHandle](https://developer.android.com/guide/navigation/navigation-programmatic#returning_a_result) of the Add Game fragment on the back stack. This can then be accessed in the Add Game fragment.
 After a game is added, the user is returned to the list view. 
 When viewing their own games on the List view, the user has the option to swipe right to edit or swipe left to delete a game. The user can also view a game by clicking on it. 
 
@@ -25,5 +25,18 @@ The edit screen reuses the "Add Game" screen but with the game details filled ou
 
 In the Nav Drawer, there is an option to switch to Map view. Here the user can view all games on a map, and again toggle between their own or all users' games. The FAB is also present on this screen to allow user add a game. 
 
-In the Nav Drawer the user can sign out of the app. 
+In the Nav Drawer the user's email and Google name is also displayed, if exists, and the user can sign out of the app. 
+
+## UML CLass Diagram 
+
+![UML CLass Diagram](/GamePlan.jpg?raw=true "Title")
+
+## UX Approach 
+
+## DX Approach 
+
+## Git Approach 
+
+## Personal Statement
+
 
